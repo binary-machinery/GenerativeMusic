@@ -8,35 +8,35 @@ public class BeatManager : MonoBehaviour
 
     [SerializeField]
     [Range(1, 300)]
-    private int bpm = 60;
+    private int _bpm = 60;
 
     [SerializeField]
-    private int measure = 4;
+    private int _measure = 4;
 
-    private float startTime;
-    private float nextBeatTime;
-    private int beatCounter;
+    private float _startTime;
+    private float _nextBeatTime;
+    private int _beatCounter;
 
     private void Start()
     {
-        startTime = Time.time;
-        nextBeatTime = startTime + GetBeatLength();
+        _startTime = Time.time;
+        _nextBeatTime = _startTime + GetBeatLength();
     }
 
     private void OnEnable()
     {
         float beatLength = GetBeatLength();
-        int beatsPassed = Mathf.FloorToInt((Time.time - startTime) / beatLength);
-        nextBeatTime = (beatsPassed + 1) * beatLength;
+        int beatsPassed = Mathf.FloorToInt((Time.time - _startTime) / beatLength);
+        _nextBeatTime = (beatsPassed + 1) * beatLength;
     }
 
     private void Update()
     {
-        if (Time.time >= nextBeatTime)
+        if (Time.time >= _nextBeatTime)
         {
-            FireBeatEvent(nextBeatTime);
-            nextBeatTime += GetBeatLength();
-            beatCounter = (beatCounter + 1) % measure;
+            FireBeatEvent(_nextBeatTime);
+            _nextBeatTime += GetBeatLength();
+            _beatCounter = (_beatCounter + 1) % _measure;
         }
     }
 
@@ -46,14 +46,14 @@ public class BeatManager : MonoBehaviour
             new BeatEvent
             {
                 time = time,
-                countInBar = beatCounter,
-                isStrong = beatCounter == 0,
+                countInBar = _beatCounter,
+                isStrong = _beatCounter == 0,
             }
         );
     }
 
     private float GetBeatLength()
     {
-        return 60f / bpm;
+        return 60f / _bpm;
     }
 }
