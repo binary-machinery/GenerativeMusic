@@ -54,6 +54,6 @@ public class BeatManager : MonoBehaviour
 
     private float GetBeatLength()
     {
-        return 1f / bpm;
+        return 60f / bpm;
     }
 }
