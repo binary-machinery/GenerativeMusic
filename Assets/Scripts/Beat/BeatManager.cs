@@ -46,7 +46,7 @@ public class BeatManager : MonoBehaviour
             new BeatEvent
             {
                 time = time,
-                beatCount = beatCounter,
+                countInBar = beatCounter,
                 isStrong = beatCounter == 0,
             }
         );
