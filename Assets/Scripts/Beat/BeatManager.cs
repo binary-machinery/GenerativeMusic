@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BeatManager : MonoBehaviour
 {
-    public delegate void OnBeatEvent(BeatEvent beatEvent);
-
-    public event OnBeatEvent onBeatEvent;
+    public event Action<BeatEvent> onBeatEvent;
 
     [SerializeField]
     [Range(1, 300)]
