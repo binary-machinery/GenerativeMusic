@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class NoteDescriptor
+public struct NoteDescriptor
 {
     public NoteType noteType {
         get { return _noteType; }
@@ -15,7 +15,13 @@ public class NoteDescriptor
     }
 
     [SerializeField]
-    private NoteType _noteType = NoteType.C;
+    private NoteType _noteType;
     [SerializeField]
-    private int _octave = 4;
+    private int _octave;
+
+    public NoteDescriptor(NoteType noteType, int octave)
+    {
+        _noteType = noteType;
+        _octave = octave;
+    }
 }

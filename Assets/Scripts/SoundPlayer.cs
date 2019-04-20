@@ -5,17 +5,25 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField]
     private BeatManager _beatManager;
     [SerializeField]
-    private AudioSource[] _audioSources;
+    private AbstractInstrument _instrument;
 
-    private Sound[] _sounds;
+    private NoteType[] _key;
+
+    private void Awake()
+    {
+        _key = new NoteType[] {
+            NoteType.C,
+            NoteType.D,
+            NoteType.E,
+            NoteType.F,
+            NoteType.G,
+            NoteType.A,
+            NoteType.B,
+        };
+    }
 
     private void Start()
     {
-        _sounds = new Sound[_audioSources.Length + 1];
-        for (int i = 0; i < _audioSources.Length; ++i)
-            _sounds[i] = new Note(_audioSources[i]);
-        _sounds[_sounds.Length - 1] = new Pause();
-
         _beatManager.onBeatEvent += OnBeatEvent;
     }
 
@@ -23,15 +31,14 @@ public class SoundPlayer : MonoBehaviour
     {
         for (int i = 0; i < 1; ++i)
         {
-            Sound sound = GetNextSound();
-            sound.SetVolume(beatEvent.isStrong ? 1f : 0.5f);
-            sound.Play();
+            NoteType noteType = GetNextNote();
+            _instrument.PlayNote(new NoteDescriptor(noteType, 4), beatEvent.isStrong ? 1f : 0.5f);
         }
     }
 
-    private Sound GetNextSound()
+    private NoteType GetNextNote()
     {
-        int index = Random.Range(0, _sounds.Length);
-        return _sounds[index];
+        int index = Random.Range(0, _key.Length);
+        return _key[index];
     }
 }
