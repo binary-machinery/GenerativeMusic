@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 9
+  _pitch:
+    _note: 9
     _octave: 4
 --- !u!1 &323140180
 GameObject:
@@ -403,8 +403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 8
+  _pitch:
+    _note: 8
     _octave: 4
 --- !u!1 &406452141
 GameObject:
@@ -546,8 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 11
+  _pitch:
+    _note: 11
     _octave: 4
 --- !u!1 &448701387
 GameObject:
@@ -689,8 +689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 2
+  _pitch:
+    _note: 2
     _octave: 4
 --- !u!1 &537571382
 GameObject:
@@ -932,8 +932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 3
+  _pitch:
+    _note: 3
     _octave: 4
 --- !u!1 &698954822
 GameObject:
@@ -1075,8 +1075,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 6
+  _pitch:
+    _note: 6
     _octave: 4
 --- !u!1 &1135560861
 GameObject:
@@ -1218,8 +1218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 4
+  _pitch:
+    _note: 4
     _octave: 4
 --- !u!1 &1197247144
 GameObject:
@@ -1361,8 +1361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 10
+  _pitch:
+    _note: 10
     _octave: 4
 --- !u!1 &1302654503
 GameObject:
@@ -1588,8 +1588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 7
+  _pitch:
+    _note: 7
     _octave: 4
 --- !u!1 &1861563604
 GameObject:
@@ -1731,8 +1731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 0
+  _pitch:
+    _note: 0
     _octave: 4
 --- !u!1 &1903623845
 GameObject:
@@ -1874,8 +1874,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 5
+  _pitch:
+    _note: 5
     _octave: 4
 --- !u!1 &1943770727
 GameObject:
@@ -2017,6 +2017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc279faac45e5643ba8f3c8cc6c2284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noteDescriptor:
-    _noteType: 1
+  _pitch:
+    _note: 1
     _octave: 4

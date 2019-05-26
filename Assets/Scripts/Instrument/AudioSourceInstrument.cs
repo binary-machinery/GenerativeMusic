@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using MusicAlgebra;
 
 public class AudioSourceInstrument : AbstractInstrument
 {
-    private Dictionary<NoteType, Dictionary<int, AudioSource>> _notes;
+    private Dictionary<Note, Dictionary<int, AudioSource>> _sources;
 
     private void Awake()
     {
-        _notes = new Dictionary<NoteType, Dictionary<int, AudioSource>>();
-        NoteDescriptorComp[] noteDescriptorComps = transform.GetComponentsInChildren<NoteDescriptorComp>();
-        foreach (NoteDescriptorComp noteDescriptorComp in noteDescriptorComps)
+        _sources = new Dictionary<Note, Dictionary<int, AudioSource>>();
+        PitchComp[] pitchComps = transform.GetComponentsInChildren<PitchComp>();
+        foreach (PitchComp pitchComp in pitchComps)
         {
-            NoteDescriptor desc = noteDescriptorComp.noteDescriptor;
-            Dictionary<int, AudioSource> notesByOctaves = _notes.GetOrCreateDefault(desc.noteType);
-            notesByOctaves[desc.octave] = noteDescriptorComp.GetComponent<AudioSource>();
+            Pitch pitch = pitchComp.pitch;
+            Dictionary<int, AudioSource> notesByOctaves = _sources.GetOrCreateDefault(pitch.note);
+            notesByOctaves[pitch.octave] = pitchComp.GetComponent<AudioSource>();
         }
     }
 
-    public override void PlayNote(NoteDescriptor noteDescriptor, float volume)
+    public override void PlayNote(Pitch pitch, float volume)
     {
-        AudioSource source = GetAudioSourceForNote(noteDescriptor);
+        AudioSource source = GetAudioSourceForNote(pitch);
         if (source != null)
         {
             source.volume = volume;
@@ -27,13 +28,13 @@ public class AudioSourceInstrument : AbstractInstrument
         }
     }
 
-    private AudioSource GetAudioSourceForNote(NoteDescriptor noteDescriptor)
+    private AudioSource GetAudioSourceForNote(Pitch pitch)
     {
-        Dictionary<int, AudioSource> notesByOctaves = _notes.GetOrDefault(noteDescriptor.noteType);
+        Dictionary<int, AudioSource> notesByOctaves = _sources.GetOrDefault(pitch.note);
         if (notesByOctaves == null)
             return null;
 
-        AudioSource note = notesByOctaves.GetOrDefault(noteDescriptor.octave);
+        AudioSource note = notesByOctaves.GetOrDefault(pitch.octave);
         if (note != null)
             return note;
 
@@ -44,7 +45,7 @@ public class AudioSourceInstrument : AbstractInstrument
         int minDelta = int.MaxValue;
         foreach (KeyValuePair<int, AudioSource> kv in notesByOctaves)
         {
-            int delta = Mathf.Abs(kv.Key - noteDescriptor.octave);
+            int delta = Mathf.Abs(kv.Key - pitch.octave);
             if (delta < minDelta)
             {
                 minDelta = delta;

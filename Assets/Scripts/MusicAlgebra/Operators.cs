@@ -2,39 +2,39 @@
 {
     public static class Operators
     {
-        public static Pitch addSemitones(Pitch pitch, int semitones)
+        public static Pitch addSemitones(Pitch pitch, sbyte semitones)
         {
-            int note = (int)pitch.note + semitones;
-            int octave = pitch.octave;
+            sbyte tone = (sbyte)(pitch.note + semitones);
+            sbyte octave = pitch.octave;
 
-            if (note > 0)
+            if (tone > 0)
             {
-                octave += note / Defines.SEMITONES_COUNT;
+                octave += (sbyte)(tone / Defines.SEMITONES_COUNT);
             }
-            else if (note < 0)
+            else if (tone < 0)
             {
-                octave += (note - Defines.SEMITONES_COUNT) / Defines.SEMITONES_COUNT;
+                octave += (sbyte)((tone - Defines.SEMITONES_COUNT) / Defines.SEMITONES_COUNT);
             }
 
-            note %= Defines.SEMITONES_COUNT;
-            if (note < 0)
+            tone %= Defines.SEMITONES_COUNT;
+            if (tone < 0)
             {
-                note += Defines.SEMITONES_COUNT;
+                tone += Defines.SEMITONES_COUNT;
             }
 
             return new Pitch
             {
-                note = (Note)note,
+                note = (Note)tone,
                 octave = octave,
             };
         }
 
-        public static Pitch addOctaves(Pitch note, int octaves)
+        public static Pitch addOctaves(Pitch note, sbyte octaves)
         {
             return new Pitch
             {
                 note = note.note,
-                octave = note.octave += octaves,
+                octave = (sbyte)(note.octave + octaves),
             };
         }
     }

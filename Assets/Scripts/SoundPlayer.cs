@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MusicAlgebra;
 
 public class SoundPlayer : MonoBehaviour
 {
@@ -7,18 +8,18 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField]
     private AbstractInstrument _instrument;
 
-    private NoteType[] _key;
+    private Note[] _key;
 
     private void Awake()
     {
-        _key = new NoteType[] {
-            NoteType.C,
-            NoteType.D,
-            NoteType.E,
-            NoteType.F,
-            NoteType.G,
-            NoteType.A,
-            NoteType.B,
+        _key = new Note[] {
+            Note.C,
+            Note.D,
+            Note.E,
+            Note.F,
+            Note.G,
+            Note.A,
+            Note.B,
         };
     }
 
@@ -31,12 +32,12 @@ public class SoundPlayer : MonoBehaviour
     {
         for (int i = 0; i < 1; ++i)
         {
-            NoteType noteType = GetNextNote();
-            _instrument.PlayNote(new NoteDescriptor(noteType, 4), beatEvent.isStrong ? 1f : 0.5f);
+            Note note = GetNextNote();
+            _instrument.PlayNote(new Pitch(note, 4), beatEvent.isStrong ? 1f : 0.5f);
         }
     }
 
-    private NoteType GetNextNote()
+    private Note GetNextNote()
     {
         int index = Random.Range(0, _key.Length);
         return _key[index];

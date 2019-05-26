@@ -16,6 +16,13 @@ namespace Tests
             };
         }
 
+        [TearDown]
+        public void VerifyOriginalPitchHasntChanged()
+        {
+            Assert.AreEqual(MusicAlgebra.Note.F, pitch.note);
+            Assert.AreEqual(4, pitch.octave);
+        }
+
         [Test]
         public void OperatorsAddSemitone()
         {
