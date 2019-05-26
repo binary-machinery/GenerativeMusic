@@ -1,8 +1,18 @@
 ﻿namespace MusicAlgebra
 {
-    public struct Note
+    public enum Note
     {
-        public Tone tone { get; set; }
-        public int octave { get; set; }
+        C,
+        Csharp,
+        D,
+        Dsharp,
+        E,
+        F,
+        Fsharp,
+        G,
+        Gsharp,
+        A,
+        Asharp,
+        B,
     }
 }
