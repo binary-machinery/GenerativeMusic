@@ -32,8 +32,12 @@ public class SoundPlayer : MonoBehaviour
     {
         for (int i = 0; i < 1; ++i)
         {
+            float volume = beatEvent.isStrong ? 1f : 0.5f;
             Note note = GetNextNote();
-            _instrument.PlayNote(new Pitch(note, 4), beatEvent.isStrong ? 1f : 0.5f);
+            Pitch root = new Pitch(note, 4);
+            _instrument.PlayNote(root, volume);
+            _instrument.PlayNote(Operators.addSemitones(root, 3), volume);
+            _instrument.PlayNote(Operators.addSemitones(root, 7), volume);
         }
     }
 
