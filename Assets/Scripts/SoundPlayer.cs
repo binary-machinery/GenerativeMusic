@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using MusicAlgebra;
 
 public class SoundPlayer : MonoBehaviour
@@ -9,6 +10,7 @@ public class SoundPlayer : MonoBehaviour
     private AbstractInstrument _instrument;
 
     private Note[] _key;
+    private Queue<Pitch> _queue;
 
     private void Awake()
     {
@@ -21,6 +23,8 @@ public class SoundPlayer : MonoBehaviour
             Note.A,
             Note.B,
         };
+
+        _queue = new Queue<Pitch>();
     }
 
     private void Start()
@@ -30,15 +34,17 @@ public class SoundPlayer : MonoBehaviour
 
     private void OnBeatEvent(BeatEvent beatEvent)
     {
-        for (int i = 0; i < 1; ++i)
+        if (_queue.Count == 0)
         {
-            float volume = beatEvent.isStrong ? 1f : 0.5f;
             Note note = GetNextNote();
             Pitch root = new Pitch(note, 4);
-            _instrument.PlayNote(root, volume);
-            _instrument.PlayNote(Operators.addSemitones(root, 3), volume);
-            _instrument.PlayNote(Operators.addSemitones(root, 7), volume);
+            _queue.Enqueue(root);
+            _queue.Enqueue(Operators.addSemitones(root, 3));
+            _queue.Enqueue(Operators.addSemitones(root, 7));
         }
+        float volume = beatEvent.isStrong ? 1f : 0.75f;
+        Pitch pitch = _queue.Dequeue();
+        _instrument.PlayNote(pitch, volume);
     }
 
     private Note GetNextNote()
