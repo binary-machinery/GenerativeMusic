@@ -6,21 +6,15 @@ namespace MusicAlgebra
     [Serializable]
     public struct Pitch
     {
-        public Note note {
-            get { return _note; }
-            set { _note = value; }
-        }
-        public sbyte octave {
-            get { return _octave; }
-            set { _octave = value; }
-        }
+        public Note note => _note;
+        public int octave => _octave;
 
         [SerializeField]
         private Note _note;
         [SerializeField]
-        private sbyte _octave;
+        private int _octave;
 
-        public Pitch(Note note, sbyte octave)
+        public Pitch(Note note, int octave)
         {
             _note = note;
             _octave = octave;

@@ -9,11 +9,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            _pitch = new MusicAlgebra.Pitch
-            {
-                note = MusicAlgebra.Note.F,
-                octave = 4,
-            };
+            _pitch = new MusicAlgebra.Pitch(MusicAlgebra.Note.F, 4);
         }
 
         [TearDown]
