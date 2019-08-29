@@ -10,7 +10,7 @@ public class Oscillator : MonoBehaviour
         Square,
         Triangle,
     }
-    
+
     private const float SAMPLING_FREQUENCY = 48000.0f;
     private const float MASTER_GAIN = 0.5f;
 
@@ -30,6 +30,18 @@ public class Oscillator : MonoBehaviour
     [SerializeField]
     [Range(0f, 1f)]
     private float _gain = 0.5f;
+
+    public float frequency
+    {
+        get => _frequency;
+        set => _frequency = value;
+    }
+
+    public float gain
+    {
+        get => _gain;
+        set => _gain = value;
+    }
 
     private float _increment;
     private float _phase;
