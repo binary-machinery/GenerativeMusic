@@ -3,7 +3,7 @@ using MusicAlgebra;
 
 namespace Tests
 {
-    public class Scales
+    public class ScalesTest
     {
         private static readonly Pitch[] C_MAJOR =
         {
