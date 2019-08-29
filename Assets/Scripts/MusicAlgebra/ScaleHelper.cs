@@ -33,7 +33,7 @@ namespace MusicAlgebra
             scale[0] = rootPitch;
             for (int i = 0; i < pattern.Length; ++i)
             {
-                scale[i + 1] = Operators.addSemitones(scale[i], pattern[i]);
+                scale[i + 1] = Operators.AddSemitones(scale[i], pattern[i]);
             }
             return scale;
         }

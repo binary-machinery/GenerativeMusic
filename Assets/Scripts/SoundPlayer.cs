@@ -39,8 +39,8 @@ public class SoundPlayer : MonoBehaviour
             Note note = GetNextNote();
             Pitch root = new Pitch(note, 4);
             _queue.Enqueue(root);
-            _queue.Enqueue(Operators.addSemitones(root, 3));
-            _queue.Enqueue(Operators.addSemitones(root, 7));
+            _queue.Enqueue(Operators.AddSemitones(root, 3));
+            _queue.Enqueue(Operators.AddSemitones(root, 7));
         }
         float volume = beatEvent.isStrong ? 1f : 0.75f;
         Pitch pitch = _queue.Dequeue();

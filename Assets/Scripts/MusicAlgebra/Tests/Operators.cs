@@ -1,142 +1,233 @@
-﻿using NUnit.Framework;
+﻿using MusicAlgebra;
+using NUnit.Framework;
 
 namespace Tests
 {
     public class Operators
     {
-        private MusicAlgebra.Pitch _pitch;
+        private Pitch _pitch;
 
         [SetUp]
         public void SetUp()
         {
-            _pitch = new MusicAlgebra.Pitch(MusicAlgebra.Note.F, 4);
+            _pitch = new Pitch(Note.F, 4);
         }
 
         [TearDown]
         public void VerifyOriginalPitchHasNotChanged()
         {
-            Assert.AreEqual(MusicAlgebra.Note.F, _pitch.note);
+            Assert.AreEqual(Note.F, _pitch.note);
             Assert.AreEqual(4, _pitch.octave);
         }
 
         [Test]
         public void OperatorsAddSemitone()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, 1);
-            Assert.AreEqual(MusicAlgebra.Note.Fsharp, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, 1);
+            Assert.AreEqual(Note.Fsharp, newPitch.note);
             Assert.AreEqual(4, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddWholeTone()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, 2);
-            Assert.AreEqual(MusicAlgebra.Note.G, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, 2);
+            Assert.AreEqual(Note.G, newPitch.note);
             Assert.AreEqual(4, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddSemitonesWithOverflow()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, 8);
-            Assert.AreEqual(MusicAlgebra.Note.Csharp, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, 8);
+            Assert.AreEqual(Note.Csharp, newPitch.note);
             Assert.AreEqual(5, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddSemitonesWithDoubleOverflow()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, 20);
-            Assert.AreEqual(MusicAlgebra.Note.Csharp, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, 20);
+            Assert.AreEqual(Note.Csharp, newPitch.note);
             Assert.AreEqual(6, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddSemitonesForOctave()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, 12);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, 12);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(5, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractSemitone()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, -1);
-            Assert.AreEqual(MusicAlgebra.Note.E, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, -1);
+            Assert.AreEqual(Note.E, newPitch.note);
             Assert.AreEqual(4, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractWholeTone()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, -2);
-            Assert.AreEqual(MusicAlgebra.Note.Dsharp, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, -2);
+            Assert.AreEqual(Note.Dsharp, newPitch.note);
             Assert.AreEqual(4, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractWholeToneWithOverflow()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, -8);
-            Assert.AreEqual(MusicAlgebra.Note.A, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, -8);
+            Assert.AreEqual(Note.A, newPitch.note);
             Assert.AreEqual(3, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractWholeToneWithDoubleOverflow()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, -20);
-            Assert.AreEqual(MusicAlgebra.Note.A, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, -20);
+            Assert.AreEqual(Note.A, newPitch.note);
             Assert.AreEqual(2, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractSemitonesForOctave()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addSemitones(_pitch, -12);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddSemitones(_pitch, -12);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(3, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddOctave()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addOctaves(_pitch, 1);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddOctaves(_pitch, 1);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(5, newPitch.octave);
         }
 
         [Test]
         public void OperatorsAddMultipleOctaves()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addOctaves(_pitch, 3);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddOctaves(_pitch, 3);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(7, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractOctave()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addOctaves(_pitch, -1);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddOctaves(_pitch, -1);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(3, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractMultipleOctaves()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addOctaves(_pitch, -3);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddOctaves(_pitch, -3);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(1, newPitch.octave);
         }
 
         [Test]
         public void OperatorsSubtractMultipleOctavesWithOverflow()
         {
-            MusicAlgebra.Pitch newPitch = MusicAlgebra.Operators.addOctaves(_pitch, -5);
-            Assert.AreEqual(MusicAlgebra.Note.F, newPitch.note);
+            Pitch newPitch = MusicAlgebra.Operators.AddOctaves(_pitch, -5);
+            Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(-1, newPitch.octave);
+        }
+
+        [Test]
+        public void OperatorsGetSemitonesDifferenceOneSemitone()
+        {
+            Pitch pitch1 = new Pitch(Note.Asharp, 4);
+            Pitch pitch2 = new Pitch(Note.A, 4);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(1, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNegativeOneSemitone()
+        {
+            Pitch pitch1 = new Pitch(Note.A, 4);
+            Pitch pitch2 = new Pitch(Note.Asharp, 4);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(-1, diff);
+        }
+
+        [Test]
+        public void OperatorsGetSemitonesDifferenceMultipleSemitones()
+        {
+            Pitch pitch1 = new Pitch(Note.Gsharp, 4);
+            Pitch pitch2 = new Pitch(Note.Dsharp, 4);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(5, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNegativeMultipleSemitones()
+        {
+            Pitch pitch1 = new Pitch(Note.Dsharp, 4);
+            Pitch pitch2 = new Pitch(Note.Gsharp, 4);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(-5, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceOneOctave()
+        {
+            Pitch pitch1 = new Pitch(Note.C, 4);
+            Pitch pitch2 = new Pitch(Note.C, 3);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(Defines.SEMITONES_COUNT, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNegativeOneOctave()
+        {
+            Pitch pitch1 = new Pitch(Note.C, 3);
+            Pitch pitch2 = new Pitch(Note.C, 4);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(-Defines.SEMITONES_COUNT, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceMultipleOctaves()
+        {
+            Pitch pitch1 = new Pitch(Note.C, 7);
+            Pitch pitch2 = new Pitch(Note.C, 3);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(4 * Defines.SEMITONES_COUNT, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNegativeMultipleOctaves()
+        {
+            Pitch pitch1 = new Pitch(Note.C, 3);
+            Pitch pitch2 = new Pitch(Note.C, 7);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(-4 * Defines.SEMITONES_COUNT, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifference()
+        {
+            Pitch pitch1 = new Pitch(Note.Fsharp, 5);
+            Pitch pitch2 = new Pitch(Note.B, 3);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(19, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNegative()
+        {
+            Pitch pitch1 = new Pitch(Note.E, 4);
+            Pitch pitch2 = new Pitch(Note.Gsharp, 7);
+            int diff = MusicAlgebra.Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(-40, diff);
         }
     }
 }
