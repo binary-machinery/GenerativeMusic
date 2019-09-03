@@ -9,21 +9,12 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField]
     private AbstractInstrument _instrument;
 
-    private Note[] _key;
+    private Scale _scale;
     private Queue<Pitch> _queue;
 
     private void Awake()
     {
-        _key = new Note[] {
-            Note.C,
-            Note.D,
-            Note.E,
-            Note.F,
-            Note.G,
-            Note.A,
-            Note.B,
-        };
-
+        _scale = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleType.Major);
         _queue = new Queue<Pitch>();
     }
 
@@ -36,20 +27,19 @@ public class SoundPlayer : MonoBehaviour
     {
         if (_queue.Count == 0)
         {
-            Note note = GetNextNote();
-            Pitch root = new Pitch(note, 4);
-            _queue.Enqueue(root);
-            _queue.Enqueue(Operators.AddSemitones(root, 3));
-            _queue.Enqueue(Operators.AddSemitones(root, 7));
+            Pitch nextPitch = GetNextPitch();
+            _queue.Enqueue(nextPitch);
+            _queue.Enqueue(Operators.AddSemitones(nextPitch, 3));
+            _queue.Enqueue(Operators.AddSemitones(nextPitch, 7));
         }
         float volume = beatEvent.isStrong ? 1f : 0.75f;
         Pitch pitch = _queue.Dequeue();
         _instrument.PlayNote(pitch, volume);
     }
 
-    private Note GetNextNote()
+    private Pitch GetNextPitch()
     {
-        int index = Random.Range(0, _key.Length);
-        return _key[index];
+        int index = Random.Range(0, _scale.pitches.Length);
+        return _scale.pitches[index];
     }
 }
