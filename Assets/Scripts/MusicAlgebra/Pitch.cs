@@ -34,5 +34,10 @@ namespace MusicAlgebra
             hashCode = hashCode * -1521134295 + _octave.GetHashCode();
             return hashCode;
         }
+
+        public override string ToString()
+        {
+            return NoteNames.Get(_note) + octave;
+        }
     }
 }

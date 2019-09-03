@@ -1,7 +1,12 @@
-﻿namespace MusicAlgebra
+﻿using System;
+
+namespace MusicAlgebra
 {
     public enum Note
     {
+        A,
+        Asharp,
+        B,
         C,
         Csharp,
         D,
@@ -11,8 +16,15 @@
         Fsharp,
         G,
         Gsharp,
-        A,
-        Asharp,
-        B,
+    }
+
+    public static class NoteNames
+    {
+        private static readonly string[] NAMES = new[] { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+
+        public static string Get(Note note)
+        {
+            return NAMES[(int)note];
+        }
     }
 }
