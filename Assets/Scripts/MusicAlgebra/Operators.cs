@@ -29,6 +29,11 @@
         {
             return new Pitch(note.note, note.octave + octaves);
         }
+        
+        public static int GetSemitonesDifference(Note note1, Note note2)
+        {
+            return note1 - note2;
+        }
 
         public static int GetSemitonesDifference(Pitch pitch1, Pitch pitch2)
         {

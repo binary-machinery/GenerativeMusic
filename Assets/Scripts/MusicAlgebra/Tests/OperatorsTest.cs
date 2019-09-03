@@ -139,6 +139,15 @@ namespace Tests
             Assert.AreEqual(Note.F, newPitch.note);
             Assert.AreEqual(-1, newPitch.octave);
         }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceZero()
+        {
+            Pitch pitch1 = new Pitch(Note.Asharp, 4);
+            Pitch pitch2 = new Pitch(Note.Asharp, 4);
+            int diff = Operators.GetSemitonesDifference(pitch1, pitch2);
+            Assert.AreEqual(0, diff);
+        }
 
         [Test]
         public void OperatorsGetSemitonesDifferenceOneSemitone()
@@ -228,6 +237,41 @@ namespace Tests
             Pitch pitch2 = new Pitch(Note.Gsharp, 7);
             int diff = Operators.GetSemitonesDifference(pitch1, pitch2);
             Assert.AreEqual(-40, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNotesZero()
+        {
+            int diff = Operators.GetSemitonesDifference(Note.A, Note.A);
+            Assert.AreEqual(0, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNotesOneSemitone()
+        {
+            int diff = Operators.GetSemitonesDifference(Note.Asharp, Note.A);
+            Assert.AreEqual(1, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNotesNegativeOneSemitone()
+        {
+            int diff = Operators.GetSemitonesDifference(Note.A, Note.Asharp);
+            Assert.AreEqual(-1, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNotesMultipleSemitones()
+        {
+            int diff = Operators.GetSemitonesDifference(Note.G, Note.E);
+            Assert.AreEqual(3, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetSemitonesDifferenceNotesNegativeMultipleSemitones()
+        {
+            int diff = Operators.GetSemitonesDifference(Note.E, Note.A);
+            Assert.AreEqual(-5, diff);
         }
     }
 }
