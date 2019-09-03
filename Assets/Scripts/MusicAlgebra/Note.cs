@@ -4,9 +4,6 @@ namespace MusicAlgebra
 {
     public enum Note
     {
-        A,
-        Asharp,
-        B,
         C,
         Csharp,
         D,
@@ -16,11 +13,14 @@ namespace MusicAlgebra
         Fsharp,
         G,
         Gsharp,
+        A,
+        Asharp,
+        B,
     }
 
     public static class NoteNames
     {
-        private static readonly string[] NAMES = new[] { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+        private static readonly string[] NAMES = new[] { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
 
         public static string Get(Note note)
         {
