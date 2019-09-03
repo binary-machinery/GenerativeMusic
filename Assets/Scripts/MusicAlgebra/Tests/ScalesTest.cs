@@ -32,15 +32,15 @@ namespace Tests
         [Test]
         public void CreateCMajor()
         {
-            Pitch[] actual = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleHelper.ScaleType.Major);
-            Assert.AreEqual(C_MAJOR, actual);
+            Scale actual = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleType.Major);
+            Assert.AreEqual(C_MAJOR, actual.pitches);
         }
         
         [Test]
         public void CreateFSharpMinor()
         {
-            Pitch[] actual = ScaleHelper.Create(new Pitch(Note.Fsharp, 4), ScaleHelper.ScaleType.Minor);
-            Assert.AreEqual(F_SHARP_MINOR, actual);
+            Scale actual = ScaleHelper.Create(new Pitch(Note.Fsharp, 4), ScaleType.Minor);
+            Assert.AreEqual(F_SHARP_MINOR, actual.pitches);
         }
     }
 }
