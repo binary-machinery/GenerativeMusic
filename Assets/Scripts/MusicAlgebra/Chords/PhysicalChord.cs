@@ -13,7 +13,6 @@ namespace MusicAlgebra
             this.root = root;
             this.pitches = pitches;
             this.academicChord = academicChord;
-            Array.Sort(this.pitches);
         }
 
         public override string ToString()

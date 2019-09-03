@@ -12,23 +12,26 @@ namespace MusicAlgebra
         {
             this.root = root;
             this.notes = notes;
-            Array.Sort(this.notes);
         }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(NoteNames.Get(root));
-            if (notes.Length >= 2)
+            if (notes.Length >= 3)
             {
-                int difference = Operators.GetSemitonesDifference(notes[1], notes[0]);
-                switch (difference)
+                int diff1 = Operators.GetAbsSemitonesDifference(notes[1], notes[0]);
+                int diff2 = Operators.GetAbsSemitonesDifference(notes[2], notes[0]);
+                switch (diff1)
                 {
-                    case 4:
-                        builder.Append("Maj");
+                    case 4 when diff2 == 7:
+                        builder.Append("maj");
                         break;
-                    case 3:
-                        builder.Append("Min");
+                    case 3 when diff2 == 7:
+                        builder.Append("min");
+                        break;
+                    case 3 when diff2 == 6:
+                        builder.Append("dim");
                         break;
                 }
             }

@@ -34,6 +34,16 @@
         {
             return note1 - note2;
         }
+        
+        public static int GetAbsSemitonesDifference(Note note1, Note note2)
+        {
+            int diff = note1 - note2;
+            if (diff < 0)
+            {
+                diff += Defines.SEMITONES_COUNT;
+            }
+            return diff;
+        }
 
         public static int GetSemitonesDifference(Pitch pitch1, Pitch pitch2)
         {

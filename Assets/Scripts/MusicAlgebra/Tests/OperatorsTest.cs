@@ -273,5 +273,40 @@ namespace Tests
             int diff = Operators.GetSemitonesDifference(Note.E, Note.A);
             Assert.AreEqual(-5, diff);
         }
+        
+        [Test]
+        public void OperatorsGetAbsSemitonesDifferenceNotesZero()
+        {
+            int diff = Operators.GetAbsSemitonesDifference(Note.A, Note.A);
+            Assert.AreEqual(0, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetAbsSemitonesDifferenceNotesOneSemitone()
+        {
+            int diff = Operators.GetAbsSemitonesDifference(Note.Asharp, Note.A);
+            Assert.AreEqual(1, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetAbsSemitonesDifferenceNotesNegativeOneSemitone()
+        {
+            int diff = Operators.GetAbsSemitonesDifference(Note.A, Note.Asharp);
+            Assert.AreEqual(11, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetAbsSemitonesDifferenceNotesMultipleSemitones()
+        {
+            int diff = Operators.GetAbsSemitonesDifference(Note.Fsharp, Note.Dsharp);
+            Assert.AreEqual(3, diff);
+        }
+        
+        [Test]
+        public void OperatorsGetAbsSemitonesDifferenceNotesNegativeMultipleSemitones()
+        {
+            int diff = Operators.GetAbsSemitonesDifference(Note.G, Note.B);
+            Assert.AreEqual(8, diff);
+        }
     }
 }
