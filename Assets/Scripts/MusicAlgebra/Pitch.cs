@@ -4,13 +4,14 @@ using UnityEngine;
 namespace MusicAlgebra
 {
     [Serializable]
-    public struct Pitch
+    public struct Pitch : IComparable
     {
         public Note note => _note;
         public int octave => _octave;
 
         [SerializeField]
         private Note _note;
+
         [SerializeField]
         private int _octave;
 
@@ -38,6 +39,11 @@ namespace MusicAlgebra
         public override string ToString()
         {
             return NoteNames.Get(_note) + octave;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return Operators.GetSemitonesDifference(this, (Pitch)obj);
         }
     }
 }
