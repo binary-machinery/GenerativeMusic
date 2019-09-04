@@ -15,27 +15,27 @@ namespace MusicAlgebra
             { ScaleType.Locrian, new[] { 1, 2, 2, 1, 2, 2 } },
         };
 
-        public static Scale Create(Pitch rootPitch, ScaleType scaleType)
+        public static AcademicScale Create(Note rootNote, ScaleType scaleType)
         {
             int[] pattern = PATTERNS[scaleType];
-            Pitch[] pitches = new Pitch[pattern.Length + 1];
-            pitches[0] = rootPitch;
+            Note[] notes = new Note[pattern.Length + 1];
+            notes[0] = rootNote;
             for (int i = 0; i < pattern.Length; ++i)
             {
-                pitches[i + 1] = Operators.AddSemitones(pitches[i], pattern[i]);
+                notes[i + 1] = Operators.AddSemitones(notes[i], pattern[i]);
             }
-            return new Scale(scaleType, pitches);
+            return new AcademicScale(scaleType, notes);
         }
 
-        public static AcademicChord[] GenerateAcademicChords(Scale scale)
+        public static AcademicChord[] GenerateAcademicChords(AcademicScale academicScale)
         {
-            AcademicChord[] chords = new AcademicChord[scale.pitches.Length];
-            for (int i = 0; i < scale.pitches.Length; ++i)
+            AcademicChord[] chords = new AcademicChord[academicScale.notes.Length];
+            for (int i = 0; i < academicScale.notes.Length; ++i)
             {
                 Note[] notes = new Note[3];
-                notes[0] = scale.pitches[i].note;
-                notes[1] = scale.pitches[(i + 2) % scale.pitches.Length].note;
-                notes[2] = scale.pitches[(i + 4) % scale.pitches.Length].note;
+                notes[0] = academicScale.notes[i];
+                notes[1] = academicScale.notes[(i + 2) % academicScale.notes.Length];
+                notes[2] = academicScale.notes[(i + 4) % academicScale.notes.Length];
                 chords[i] = new AcademicChord(notes[0], notes);
             }
             return chords;

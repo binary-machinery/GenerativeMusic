@@ -2,6 +2,16 @@
 {
     public static class Operators
     {
+        public static Note AddSemitones(Note note, int semitones)
+        {
+            int res = ((int)note + semitones) % Defines.SEMITONES_COUNT;
+            if (res < 0)
+            {
+                res += Defines.SEMITONES_COUNT;
+            }
+            return (Note)res;
+        }
+
         public static Pitch AddSemitones(Pitch pitch, int semitones)
         {
             int note = (int)pitch.note + semitones;
@@ -29,12 +39,12 @@
         {
             return new Pitch(note.note, note.octave + octaves);
         }
-        
+
         public static int GetSemitonesDifference(Note note1, Note note2)
         {
             return note1 - note2;
         }
-        
+
         public static int GetAbsSemitonesDifference(Note note1, Note note2)
         {
             int diff = note1 - note2;

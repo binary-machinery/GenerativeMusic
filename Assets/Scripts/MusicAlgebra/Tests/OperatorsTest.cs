@@ -19,6 +19,48 @@ namespace Tests
             Assert.AreEqual(Note.F, _pitch.note);
             Assert.AreEqual(4, _pitch.octave);
         }
+        
+        [Test]
+        public void OperatorsAddSemitoneForNotes()
+        {
+            Note newNote = Operators.AddSemitones(Note.D, 1);
+            Assert.AreEqual(Note.Dsharp, newNote);
+        }
+        
+        [Test]
+        public void OperatorsAddSemitoneForNotesMultiple()
+        {
+            Note newNote = Operators.AddSemitones(Note.D, 4);
+            Assert.AreEqual(Note.Fsharp, newNote);
+        }
+        
+        [Test]
+        public void OperatorsAddSemitoneForNotesWithOverflow()
+        {
+            Note newNote = Operators.AddSemitones(Note.Fsharp, 10);
+            Assert.AreEqual(Note.E, newNote);
+        }
+        
+        [Test]
+        public void OperatorsSubtractSemitoneForNotes()
+        {
+            Note newNote = Operators.AddSemitones(Note.D, -1);
+            Assert.AreEqual(Note.Csharp, newNote);
+        }
+        
+        [Test]
+        public void OperatorsSubtractSemitoneForNotesMultiple()
+        {
+            Note newNote = Operators.AddSemitones(Note.F, -3);
+            Assert.AreEqual(Note.D, newNote);
+        }
+        
+        [Test]
+        public void OperatorsSubtractSemitoneForNotesWithOverflow()
+        {
+            Note newNote = Operators.AddSemitones(Note.F, -10);
+            Assert.AreEqual(Note.G, newNote);
+        }
 
         [Test]
         public void OperatorsAddSemitone()

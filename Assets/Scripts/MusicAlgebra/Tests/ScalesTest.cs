@@ -5,26 +5,26 @@ namespace Tests
 {
     public class ScalesTest
     {
-        private static readonly Pitch[] C_MAJOR =
+        private static readonly Note[] C_MAJOR =
         {
-            new Pitch(Note.C, 4),
-            new Pitch(Note.D, 4),
-            new Pitch(Note.E, 4),
-            new Pitch(Note.F, 4),
-            new Pitch(Note.G, 4),
-            new Pitch(Note.A, 4),
-            new Pitch(Note.B, 4),
+            Note.C,
+            Note.D,
+            Note.E,
+            Note.F,
+            Note.G,
+            Note.A,
+            Note.B,
         };
         
-        private static readonly Pitch[] F_SHARP_MINOR =
+        private static readonly Note[] F_SHARP_MINOR =
         {
-            new Pitch(Note.Fsharp, 4),
-            new Pitch(Note.Gsharp, 4),
-            new Pitch(Note.A, 4),
-            new Pitch(Note.B, 4),
-            new Pitch(Note.Csharp, 5),
-            new Pitch(Note.D, 5),
-            new Pitch(Note.E, 5),
+            Note.Fsharp,
+            Note.Gsharp,
+            Note.A,
+            Note.B,
+            Note.Csharp,
+            Note.D,
+            Note.E,
         };
 
         private static readonly AcademicChord[] C_MAJOR_CHORDS =
@@ -41,22 +41,22 @@ namespace Tests
         [Test]
         public void CreateCMajor()
         {
-            Scale actual = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleType.Major);
-            Assert.AreEqual(C_MAJOR, actual.pitches);
+            AcademicScale actual = ScaleHelper.Create(Note.C, ScaleType.Major);
+            Assert.AreEqual(C_MAJOR, actual.notes);
         }
         
         [Test]
         public void CreateFSharpMinor()
         {
-            Scale actual = ScaleHelper.Create(new Pitch(Note.Fsharp, 4), ScaleType.Minor);
-            Assert.AreEqual(F_SHARP_MINOR, actual.pitches);
+            AcademicScale actual = ScaleHelper.Create(Note.Fsharp, ScaleType.Minor);
+            Assert.AreEqual(F_SHARP_MINOR, actual.notes);
         }
 
         [Test]
         public void GenerateAcademicChordsCMajor()
         {
-            Scale scale = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleType.Major);
-            AcademicChord[] academicChords = ScaleHelper.GenerateAcademicChords(scale);
+            AcademicScale academicScale = ScaleHelper.Create(Note.C, ScaleType.Major);
+            AcademicChord[] academicChords = ScaleHelper.GenerateAcademicChords(academicScale);
             for (int i = 0; i < academicChords.Length; ++i)
             {
                 Assert.AreEqual(C_MAJOR_CHORDS[i].notes, academicChords[i].notes);

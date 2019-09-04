@@ -9,12 +9,12 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField]
     private AbstractInstrument _instrument;
 
-    private Scale _scale;
+    private AcademicScale _academicScale;
     private Queue<Pitch> _queue;
 
     private void Awake()
     {
-        _scale = ScaleHelper.Create(new Pitch(Note.C, 4), ScaleType.Major);
+        _academicScale = ScaleHelper.Create(Note.C, ScaleType.Major);
         _queue = new Queue<Pitch>();
     }
 
@@ -39,7 +39,7 @@ public class SoundPlayer : MonoBehaviour
 
     private Pitch GetNextPitch()
     {
-        int index = Random.Range(0, _scale.pitches.Length);
-        return _scale.pitches[index];
+        int index = Random.Range(0, _academicScale.notes.Length);
+        return new Pitch(_academicScale.notes[index], 4);
     }
 }
