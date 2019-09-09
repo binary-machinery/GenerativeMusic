@@ -6,15 +6,15 @@ namespace MusicAlgebra
     {
         public Note root { get; }
         public Note[] notes { get; }
+        public ChordType chordType { get; }
+
+        private string _name;
 
         public AcademicChord(Note root, Note[] notes)
         {
             this.root = root;
             this.notes = notes;
-        }
 
-        public override string ToString()
-        {
             StringBuilder builder = new StringBuilder();
             builder.Append(NoteNames.Get(root));
             if (notes.Length >= 3)
@@ -24,17 +24,31 @@ namespace MusicAlgebra
                 switch (diff1)
                 {
                     case 4 when diff2 == 7:
-                        builder.Append("maj");
+                        chordType = ChordType.Major;
+                        builder.Append(ChordNames.Get(ChordType.Major));
                         break;
+
                     case 3 when diff2 == 7:
-                        builder.Append("min");
+                        chordType = ChordType.Minor;
+                        builder.Append(ChordNames.Get(ChordType.Minor));
                         break;
+
                     case 3 when diff2 == 6:
-                        builder.Append("dim");
+                        chordType = ChordType.Diminished;
+                        builder.Append(ChordNames.Get(ChordType.Diminished));
+                        break;
+
+                    default:
+                        chordType = ChordType.Undefined;
                         break;
                 }
             }
-            return builder.ToString();
+            _name = builder.ToString();
+        }
+
+        public override string ToString()
+        {
+            return _name;
         }
     }
 }
