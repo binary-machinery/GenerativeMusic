@@ -3,5 +3,5 @@ using MusicAlgebra;
 
 public abstract class AbstractInstrument : MonoBehaviour
 {
-    public abstract void PlayNote(Pitch pitch, float volume);
+    public abstract AbstractSoundController PlayNote(Pitch pitch, float volume, int durationQuarterBeats);
 }

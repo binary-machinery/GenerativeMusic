@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BeatManager : MonoBehaviour
 {
+    public event Action<QuarterBeatEvent> onQuarterBeatEvent;
     public event Action<BeatEvent> onBeatEvent;
 
     [SerializeField]
@@ -13,30 +14,41 @@ public class BeatManager : MonoBehaviour
     private int _measure = 4;
 
     private float _startTime;
-    private float _nextBeatTime;
+    private float _nextQuarterBeatTime;
     private int _beatCounter;
+    private int _quarterBeatCounter;
 
     private void Start()
     {
         _startTime = Time.time;
-        _nextBeatTime = _startTime + GetBeatLength();
+        _nextQuarterBeatTime = _startTime + GetQuarterBeatLength();
     }
 
     private void OnEnable()
     {
-        float beatLength = GetBeatLength();
-        int beatsPassed = Mathf.FloorToInt((Time.time - _startTime) / beatLength);
-        _nextBeatTime = (beatsPassed + 1) * beatLength;
+        float quarterBeatLength = GetQuarterBeatLength();
+        int quarterBeatsPassed = Mathf.FloorToInt((Time.time - _startTime) / quarterBeatLength);
+        _nextQuarterBeatTime = (quarterBeatsPassed + 1) * quarterBeatLength;
     }
 
     private void Update()
     {
-        if (Time.time >= _nextBeatTime)
+        if (Time.time >= _nextQuarterBeatTime)
         {
-            FireBeatEvent(_nextBeatTime);
-            _nextBeatTime += GetBeatLength();
-            _beatCounter = (_beatCounter + 1) % _measure;
+            FireQuarterBeatEvent();
+            _nextQuarterBeatTime += GetQuarterBeatLength();
+            _quarterBeatCounter = (_quarterBeatCounter + 1) % 4;
+            if (_quarterBeatCounter == 0)
+            {
+                FireBeatEvent(_nextQuarterBeatTime);
+                _beatCounter = (_beatCounter + 1) % _measure;
+            }
         }
+    }
+
+    private void FireQuarterBeatEvent()
+    {
+        onQuarterBeatEvent?.Invoke(new QuarterBeatEvent());
     }
 
     private void FireBeatEvent(float time)
@@ -51,8 +63,8 @@ public class BeatManager : MonoBehaviour
         );
     }
 
-    private float GetBeatLength()
+    private float GetQuarterBeatLength()
     {
-        return 60f / _bpm;
+        return 60f / 4f / _bpm;
     }
 }
