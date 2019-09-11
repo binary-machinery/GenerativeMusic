@@ -6,11 +6,12 @@ public class SoundPlayer : MonoBehaviour
 {
     [SerializeField]
     private BeatManager _beatManager;
+
     [SerializeField]
     private AbstractInstrument _instrument;
 
     private AcademicChord[] _academicChords;
-    private Queue<Pitch> _queue;
+    private Queue<PlayableSound> _queue;
     private Dictionary<int, AbstractSoundController> _soundControllers;
     private HashSet<int> _soundsToStop;
     private int _soundCounter;
@@ -19,7 +20,7 @@ public class SoundPlayer : MonoBehaviour
     {
         AcademicScale scale = ScaleHelper.Create(Note.C, ScaleType.Major);
         _academicChords = ScaleHelper.GenerateAcademicChords(scale);
-        _queue = new Queue<Pitch>();
+        _queue = new Queue<PlayableSound>();
         _soundControllers = new Dictionary<int, AbstractSoundController>();
         _soundsToStop = new HashSet<int>();
     }
@@ -55,13 +56,14 @@ public class SoundPlayer : MonoBehaviour
         if (_queue.Count == 0)
         {
             AcademicChord academicChord = GetNextChord();
-            _queue.Enqueue(new Pitch(academicChord.notes[0], 4));
-            _queue.Enqueue(new Pitch(academicChord.notes[1], 4));
-            _queue.Enqueue(new Pitch(academicChord.notes[2], 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, 4));
         }
         float volume = beatEvent.isStrong ? 1f : 0.75f;
-        Pitch pitch = _queue.Dequeue();
-        AbstractSoundController soundController = _instrument.PlayNote(pitch, volume, 4);
+        PlayableSound playableSound = _queue.Dequeue();
+        AbstractSoundController soundController = _instrument.PlayNote(
+            playableSound.pitch, volume, playableSound.durationQuarterBeats);
         _soundControllers[_soundCounter++] = soundController;
     }
 
