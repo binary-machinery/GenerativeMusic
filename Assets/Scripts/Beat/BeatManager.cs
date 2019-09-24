@@ -37,30 +37,23 @@ public class BeatManager : MonoBehaviour
         {
             FireQuarterBeatEvent();
             _nextQuarterBeatTime += GetQuarterBeatLength();
-            _quarterBeatCounter = (_quarterBeatCounter + 1) % 4;
-            if (_quarterBeatCounter == 0)
+            ++_quarterBeatCounter;
+            if (_quarterBeatCounter % 4 == 0)
             {
                 FireBeatEvent(_nextQuarterBeatTime);
-                _beatCounter = (_beatCounter + 1) % _measure;
+                ++_beatCounter;
             }
         }
     }
 
     private void FireQuarterBeatEvent()
     {
-        onQuarterBeatEvent?.Invoke(new QuarterBeatEvent());
+        onQuarterBeatEvent?.Invoke(new QuarterBeatEvent(_quarterBeatCounter));
     }
 
     private void FireBeatEvent(float time)
     {
-        onBeatEvent?.Invoke(
-            new BeatEvent
-            {
-                time = time,
-                countInBar = _beatCounter,
-                isStrong = _beatCounter == 0,
-            }
-        );
+        onBeatEvent?.Invoke(new BeatEvent(time, _quarterBeatCounter, _beatCounter % 4 == 0));
     }
 
     private float GetQuarterBeatLength()

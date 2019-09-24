@@ -56,9 +56,9 @@ public class SoundPlayer : MonoBehaviour
         if (_queue.Count == 0)
         {
             AcademicChord academicChord = GetNextChord();
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, 4));
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, 4));
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
+            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
         }
         float volume = beatEvent.isStrong ? 1f : 0.75f;
         PlayableSound playableSound = _queue.Dequeue();
