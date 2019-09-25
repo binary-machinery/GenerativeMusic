@@ -61,12 +61,12 @@ public class SoundPlayer : MonoBehaviour
             _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, beatEvent.quarterBeatNumber, 4));
             _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, beatEvent.quarterBeatNumber, 4));
         }
-        float volume = beatEvent.isStrong ? 1f : 0.75f;
+
         PlayableSound playableSound;
         while ((playableSound = _queue.GetNextForQuarterBeat(beatEvent.quarterBeatNumber)) != null)
         {
             AbstractSoundController soundController = _instrument.PlayNote(
-                playableSound.pitch, volume, playableSound.durationQuarterBeats);
+                playableSound.pitch, playableSound.volume, playableSound.durationQuarterBeats);
             _soundControllers[_soundCounter++] = soundController;
         }
     }
