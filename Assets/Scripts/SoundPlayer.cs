@@ -10,8 +10,10 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField]
     private AbstractInstrument _instrument;
 
+    [SerializeField]
+    private PlayableSoundQueue _queue;
+
     private AcademicChord[] _academicChords;
-    private Queue<PlayableSound> _queue;
     private Dictionary<int, AbstractSoundController> _soundControllers;
     private HashSet<int> _soundsToStop;
     private int _soundCounter;
@@ -20,7 +22,6 @@ public class SoundPlayer : MonoBehaviour
     {
         AcademicScale scale = ScaleHelper.Create(Note.C, ScaleType.Major);
         _academicChords = ScaleHelper.GenerateAcademicChords(scale);
-        _queue = new Queue<PlayableSound>();
         _soundControllers = new Dictionary<int, AbstractSoundController>();
         _soundsToStop = new HashSet<int>();
     }
@@ -53,18 +54,21 @@ public class SoundPlayer : MonoBehaviour
 
     private void OnBeatEvent(BeatEvent beatEvent)
     {
-        if (_queue.Count == 0)
+        if (_queue.count == 0)
         {
             AcademicChord academicChord = GetNextChord();
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
-            _queue.Enqueue(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, beatEvent.quarterBeatNumber + 1, 4));
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, beatEvent.quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, beatEvent.quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, beatEvent.quarterBeatNumber, 4));
         }
         float volume = beatEvent.isStrong ? 1f : 0.75f;
-        PlayableSound playableSound = _queue.Dequeue();
-        AbstractSoundController soundController = _instrument.PlayNote(
-            playableSound.pitch, volume, playableSound.durationQuarterBeats);
-        _soundControllers[_soundCounter++] = soundController;
+        PlayableSound playableSound;
+        while ((playableSound = _queue.GetNextForQuarterBeat(beatEvent.quarterBeatNumber)) != null)
+        {
+            AbstractSoundController soundController = _instrument.PlayNote(
+                playableSound.pitch, volume, playableSound.durationQuarterBeats);
+            _soundControllers[_soundCounter++] = soundController;
+        }
     }
 
     private AcademicChord GetNextChord()
