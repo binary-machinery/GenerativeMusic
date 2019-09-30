@@ -211,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _beatManager: {fileID: 1302654504}
   _queue: {fileID: 71877716}
-  _soundPrefab: {fileID: -633429629966601120, guid: 69d0ea607666c934a8540d489db8fe2b,
+  _soundPrefab: {fileID: 8319348475117576626, guid: 69d0ea607666c934a8540d489db8fe2b,
     type: 3}
   _quarterBeatStep: 0.4
   _pitchStep: 0.4
@@ -1791,6 +1791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _oscillatorPrefab: {fileID: 4194312882240480887, guid: efbd904ff639ffb43981ab9480b41add,
     type: 3}
+  _masterGain: 0.138
 --- !u!4 &1492882634
 Transform:
   m_ObjectHideFlags: 0
