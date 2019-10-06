@@ -42,6 +42,34 @@ namespace Visualization
             _soundsParent.parent = this.transform;
         }
 
+        void Update()
+        {
+            int stepsCount = 48;
+            float width = 20f;
+            float height = 20f;
+
+            for (int i = -stepsCount / 2; i <= stepsCount / 2; ++i)
+            {
+                float x = i * _quarterBeatStep;
+                Color color;
+                if (i == 0)
+                {
+                    color = Color.blue;
+                }
+                else
+                {
+                    color = i % 4 == 0 ? Color.red : Color.white;
+                }
+                Debug.DrawLine(new Vector3(x, -height / 2f, Z_DEPTH), new Vector3(x, height / 2f, Z_DEPTH), color);
+            }
+
+            for (int i = -stepsCount / 2; i <= stepsCount / 2; ++i)
+            {
+                float y = i * _pitchStep;
+                Debug.DrawLine(new Vector3(-width / 2f, y, Z_DEPTH), new Vector3(width / 2f, y, Z_DEPTH));
+            }
+        }
+
         private void OnQuarterBeatEvent(QuarterBeatEvent quarterBeatEvent)
         {
             foreach (var kv in _sounds)
@@ -80,6 +108,7 @@ namespace Visualization
             Sound sound = Instantiate(_soundPrefab, _soundsParent);
             sound.gameObject.SetActive(false);
             sound.playableSound = playableSound;
+            sound.SetSize(_quarterBeatStep * playableSound.durationQuarterBeats, _pitchStep);
             _sounds[playableSound.id] = sound;
         }
     }
