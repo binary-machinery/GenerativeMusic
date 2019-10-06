@@ -11,9 +11,12 @@ public class PlayableSoundQueue : MonoBehaviour
 
     public int count => _queue.Count;
 
+    private PlayableSound _lastSound;
+
     public void AddSound(PlayableSound sound)
     {
         _queue.Enqueue(sound);
+        _lastSound = sound;
         onSoundAdded?.Invoke(sound);
     }
 
@@ -27,5 +30,10 @@ public class PlayableSoundQueue : MonoBehaviour
         PlayableSound sound = _queue.Dequeue();
         onSoundRemoved?.Invoke(sound);
         return sound;
+    }
+
+    public PlayableSound GetLastSound()
+    {
+        return _queue.Count > 0 ? _lastSound : null;
     }
 }

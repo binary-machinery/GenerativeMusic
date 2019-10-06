@@ -54,12 +54,18 @@ public class SoundPlayer : MonoBehaviour
 
     private void OnBeatEvent(BeatEvent beatEvent)
     {
-        if (_queue.count == 0)
+        while (_queue.count < 20)
         {
             AcademicChord academicChord = GetNextChord();
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, beatEvent.quarterBeatNumber, 4));
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, beatEvent.quarterBeatNumber, 4));
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, beatEvent.quarterBeatNumber, 4));
+            PlayableSound lastSound = _queue.GetLastSound();
+            int quarterBeatNumber = beatEvent.quarterBeatNumber;
+            if (lastSound != null)
+            {
+                quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
+            }
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, quarterBeatNumber, 4));
         }
 
         PlayableSound playableSound;
