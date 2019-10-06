@@ -26,6 +26,12 @@ namespace Visualization
         [SerializeField]
         private float _pitchStep;
 
+        [SerializeField]
+        private Color _defaultSoundColor = Color.red;
+        
+        [SerializeField]
+        private Color _playingSoundColor = Color.blue;
+
         private Dictionary<int, Sound> _sounds;
         private HashSet<int> _soundsToRemove;
         private Transform _soundsParent;
@@ -92,6 +98,15 @@ namespace Visualization
                 if (beatGridIndex + sound.playableSound.durationQuarterBeats < -PLAYED_SOUNDS_TIME_TO_LIVE)
                 {
                     _soundsToRemove.Add(sound.playableSound.id);
+                }
+
+                if (beatGridIndex <= 0 && Mathf.Abs(beatGridIndex) < sound.playableSound.durationQuarterBeats)
+                {
+                    sound.SetColor(_playingSoundColor);
+                }
+                else
+                {
+                    sound.SetColor(_defaultSoundColor);
                 }
             }
 

@@ -14,5 +14,12 @@ namespace Visualization
             scale.y = height;
             t.localScale = scale;
         }
+
+        public void SetColor(Color color)
+        {
+            Renderer renderer = transform.GetChild(0).GetComponent<Renderer>();
+            Material material = renderer.material;
+            material.color = color;
+        }
     }
 }

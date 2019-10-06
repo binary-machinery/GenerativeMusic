@@ -214,6 +214,8 @@ MonoBehaviour:
     type: 3}
   _quarterBeatStep: 0.4
   _pitchStep: 0.4
+  _defaultSoundColor: {r: 1, g: 0, b: 0, a: 1}
+  _playingSoundColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &222097922
 GameObject:
   m_ObjectHideFlags: 0
