@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using MusicAlgebra;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
@@ -56,7 +55,10 @@ public class SoundPlayer : MonoBehaviour
         {
             AbstractSoundController soundController = _instrument.PlayNote(
                 playableSound.pitch, playableSound.volume, playableSound.durationQuarterBeats);
-            _soundControllers[_soundCounter++] = soundController;
+            if (soundController != null)
+            {
+                _soundControllers[_soundCounter++] = soundController;
+            }
         }
     }
 }
