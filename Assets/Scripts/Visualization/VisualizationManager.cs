@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MusicAlgebra;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ namespace Visualization
         private const int PLAYED_SOUNDS_TIME_TO_LIVE = 24; // in quarter beats
         private const int NOTE_GRID_OFFSET = -4;
         private const int OCTAVE_GRID_OFFSET = -4;
+
+        public Action<Sound> onSoundCreated;
+        public Action<Sound> onSoundUpdated;
+        public Action<int> onSoundRemoved;
 
         [SerializeField]
         private BeatManager _beatManager;
@@ -28,7 +33,7 @@ namespace Visualization
 
         [SerializeField]
         private Color _defaultSoundColor = Color.red;
-        
+
         [SerializeField]
         private Color _playingSoundColor = Color.blue;
 
@@ -108,12 +113,15 @@ namespace Visualization
                 {
                     sound.SetColor(_defaultSoundColor);
                 }
+                
+                onSoundUpdated?.Invoke(sound);
             }
 
             foreach (int id in _soundsToRemove)
             {
                 Destroy(_sounds[id].gameObject);
                 _sounds.Remove(id);
+                onSoundRemoved?.Invoke(id);
             }
             _soundsToRemove.Clear();
         }
@@ -125,6 +133,8 @@ namespace Visualization
             sound.playableSound = playableSound;
             sound.SetSize(_quarterBeatStep * playableSound.durationQuarterBeats, _pitchStep);
             _sounds[playableSound.id] = sound;
+
+            onSoundCreated?.Invoke(sound);
         }
     }
 }
