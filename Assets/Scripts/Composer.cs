@@ -8,14 +8,14 @@ public class Composer : MonoBehaviour
 
     [SerializeField]
     private PlayableSoundQueue _queue;
-    
+
     private AcademicChord[] _academicChords;
 
     private void Awake()
     {
         AcademicScale scale = ScaleHelper.Create(Note.C, ScaleType.Major);
         _academicChords = ScaleHelper.GenerateAcademicChords(scale);
-        
+
         _beatManager.onBeatEvent += OnBeatEvent;
     }
 
@@ -30,12 +30,17 @@ public class Composer : MonoBehaviour
             {
                 quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
             }
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[0], 4), 1f, quarterBeatNumber, 4));
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[1], 4), 1f, quarterBeatNumber, 4));
-            _queue.AddSound(new PlayableSound(new Pitch(academicChord.notes[2], 4), 1f, quarterBeatNumber, 4));
+
+            Pitch root = new Pitch(academicChord.notes[0], 4);
+            Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
+            Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
+
+            _queue.AddSound(new PlayableSound(root, 1f, quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(third, 1f, quarterBeatNumber, 4));
+            _queue.AddSound(new PlayableSound(fifth, 1f, quarterBeatNumber, 4));
         }
     }
-    
+
     private AcademicChord GetRandomChord()
     {
         int index = Random.Range(0, _academicChords.Length);
