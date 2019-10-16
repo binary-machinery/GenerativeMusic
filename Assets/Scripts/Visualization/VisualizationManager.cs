@@ -32,6 +32,9 @@ namespace Visualization
         private float _pitchStep;
 
         [SerializeField]
+        private int _pitchGridIndexOffset;
+
+        [SerializeField]
         private Color _defaultSoundColor = Color.red;
 
         [SerializeField]
@@ -95,8 +98,9 @@ namespace Visualization
                 float x = beatGridIndex * _quarterBeatStep;
 
                 Pitch pitch = sound.playableSound.pitch;
-                int noteGridIndex = (int)pitch.note + NOTE_GRID_OFFSET + (pitch.octave + OCTAVE_GRID_OFFSET) * Defines.SEMITONES_COUNT;
-                float y = noteGridIndex * _pitchStep;
+                int pitchGridIndex = (int)pitch.note + NOTE_GRID_OFFSET + (pitch.octave + OCTAVE_GRID_OFFSET) * Defines.SEMITONES_COUNT;
+                pitchGridIndex += _pitchGridIndexOffset;
+                float y = pitchGridIndex * _pitchStep;
 
                 sound.transform.localPosition = new Vector3(x, y, Z_DEPTH);
 
