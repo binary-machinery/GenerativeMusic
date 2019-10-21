@@ -49,7 +49,6 @@ public class Oscillator : MonoBehaviour
         set => _gain = value;
     }
 
-    private float _increment;
     private float _phase;
 
     private void OnAudioFilterRead(float[] data, int channels)
@@ -63,11 +62,6 @@ public class Oscillator : MonoBehaviour
             for (int channel = 1; channel < channels; ++channel)
             {
                 data[i + channel] = data[i];
-            }
-
-            if (_phase > Mathf.PI * 2f)
-            {
-                _phase = 0f;
             }
         }
     }
