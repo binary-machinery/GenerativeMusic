@@ -13,7 +13,7 @@ public class Composer : MonoBehaviour
 
     private void Awake()
     {
-        AcademicScale scale = ScaleHelper.Create(Note.C, ScaleType.Major);
+        AcademicScale scale = ScaleHelper.Create(Note.F, ScaleType.Minor);
         _academicChords = ScaleHelper.GenerateAcademicChords(scale);
 
         _beatManager.onBeatEvent += OnBeatEvent;

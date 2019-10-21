@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Oscillator : MonoBehaviour
 {
-    private enum WaveForm
+    public enum WaveForm
     {
         Sine,
         Square,
@@ -30,6 +30,12 @@ public class Oscillator : MonoBehaviour
     [SerializeField]
     [Range(0f, 1f)]
     private float _gain = 0.5f;
+
+    public WaveForm waveForm
+    {
+        get => _waveForm;
+        set => _waveForm = value;
+    }
 
     public float frequency
     {
