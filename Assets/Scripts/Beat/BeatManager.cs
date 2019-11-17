@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Beat;
 using UnityEngine;
 
 public class BeatManager : MonoBehaviour
 {
-    public event Action<QuarterBeatEvent> onQuarterBeatEvent;
-    public event Action<BeatEvent> onBeatEvent;
-
     [SerializeField]
     [Range(1, 300)]
     private int _bpm = 60;
@@ -18,11 +17,15 @@ public class BeatManager : MonoBehaviour
     private float _nextQuarterBeatTime;
     private int _beatCounter;
     private int _quarterBeatCounter;
+    private List<PrioritizedEventListener<BeatEvent>> _beatEventListeners;
+    private List<PrioritizedEventListener<QuarterBeatEvent>> _quarterBeatEventListeners;
 
-    private void Start()
+    private void Awake()
     {
         _startTime = Time.time;
         _nextQuarterBeatTime = _startTime + GetQuarterBeatLength();
+        _beatEventListeners = new List<PrioritizedEventListener<BeatEvent>>();
+        _quarterBeatEventListeners = new List<PrioritizedEventListener<QuarterBeatEvent>>();
     }
 
     private void OnEnable()
@@ -46,15 +49,37 @@ public class BeatManager : MonoBehaviour
             }
         }
     }
+    
+    public void AddBeatEventListener(Action<BeatEvent> action, int priority = -1)
+    {
+        _beatEventListeners.Add(new PrioritizedEventListener<BeatEvent>
+        {
+            priority = priority,
+            action = action,
+        });
+        _beatEventListeners.Sort((a, b) => a.priority - b.priority);
+    }
+
+    public void AddQuarterBeatEventListener(Action<QuarterBeatEvent> action, int priority = -1)
+    {
+        _quarterBeatEventListeners.Add(new PrioritizedEventListener<QuarterBeatEvent>
+        {
+            priority = priority,
+            action = action,
+        });
+        _quarterBeatEventListeners.Sort((a, b) => a.priority - b.priority);
+    }
 
     private void FireQuarterBeatEvent()
     {
-        onQuarterBeatEvent?.Invoke(new QuarterBeatEvent(_quarterBeatCounter));
+        QuarterBeatEvent quarterBeatEvent = new QuarterBeatEvent(_quarterBeatCounter);
+        _quarterBeatEventListeners.ForEach(listener => listener.action.Invoke(quarterBeatEvent));
     }
 
     private void FireBeatEvent(float time)
     {
-        onBeatEvent?.Invoke(new BeatEvent(time, _quarterBeatCounter, _beatCounter % _measure == 0));
+        BeatEvent beatEvent = new BeatEvent(time, _quarterBeatCounter, _beatCounter % _measure == 0);
+        _beatEventListeners.ForEach(listener => listener.action.Invoke(beatEvent));
     }
 
     private float GetQuarterBeatLength()

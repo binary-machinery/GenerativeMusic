@@ -10,7 +10,7 @@ namespace ConfigurablePipeline
         
         private void Start()
         {
-            context.beatManager.onBeatEvent += OnBeatEvent;
+            context.beatManager.AddBeatEventListener(OnBeatEvent, transform.GetSiblingIndex());
         }
 
         private void OnBeatEvent(BeatEvent beatEvent)

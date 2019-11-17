@@ -49,11 +49,14 @@ namespace Visualization
             _sounds = new Dictionary<int, Sound>();
             _soundsToRemove = new HashSet<int>();
 
-            _beatManager.onQuarterBeatEvent += OnQuarterBeatEvent;
-            _queue.onSoundAdded += OnSoundAdded;
-
             _soundsParent = new GameObject("Sounds").transform;
             _soundsParent.parent = this.transform;
+        }
+
+        private void Start()
+        {
+            _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent);
+            _queue.onSoundAdded += OnSoundAdded;
         }
 
         void Update()
