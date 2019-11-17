@@ -11,6 +11,7 @@ public class BeatManager : MonoBehaviour
     private int _bpm = 60;
 
     [SerializeField]
+    [Range(1, 10)]
     private int _measure = 4;
 
     private float _startTime;
@@ -38,7 +39,7 @@ public class BeatManager : MonoBehaviour
             FireQuarterBeatEvent();
             _nextQuarterBeatTime += GetQuarterBeatLength();
             ++_quarterBeatCounter;
-            if (_quarterBeatCounter % 4 == 0)
+            if (_quarterBeatCounter % _measure == 0)
             {
                 FireBeatEvent(_nextQuarterBeatTime);
                 ++_beatCounter;
@@ -53,7 +54,7 @@ public class BeatManager : MonoBehaviour
 
     private void FireBeatEvent(float time)
     {
-        onBeatEvent?.Invoke(new BeatEvent(time, _quarterBeatCounter, _beatCounter % 4 == 0));
+        onBeatEvent?.Invoke(new BeatEvent(time, _quarterBeatCounter, _beatCounter % _measure == 0));
     }
 
     private float GetQuarterBeatLength()
