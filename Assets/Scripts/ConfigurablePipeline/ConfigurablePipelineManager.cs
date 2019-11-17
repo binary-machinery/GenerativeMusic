@@ -4,16 +4,19 @@ namespace ConfigurablePipeline
 {
     public class ConfigurablePipelineManager : MonoBehaviour
     {
+        public Context context => _context;
+
         [SerializeField]
         private BeatManager _beatManager;
-        
-        [SerializeField]
-        private IScaleGenerator _scaleGenerator;
 
-        [SerializeField]
-        private IChordsGenerator _chordsGenerator;
+        private Context _context;
 
-        [SerializeField]
-        private IPhysicalChordConverter _physicalChordConverter;
+        private void Awake()
+        {
+            _context = new Context
+            {
+                beatManager = _beatManager
+            };
+        }
     }
 }
