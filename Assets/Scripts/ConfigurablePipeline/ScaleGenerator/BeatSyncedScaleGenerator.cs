@@ -1,13 +1,13 @@
-﻿namespace ConfigurablePipeline
+namespace ConfigurablePipeline
 {
-    public class ImmediateScaleGenerator : AbstractScaleGenerator
+    public class BeatSyncedScaleGenerator : AbstractScaleGenerator
     {
         private void Start()
         {
-            UpdateScale(rootNote, scaleType);
+            context.beatManager.onBeatEvent += OnBeatEvent;
         }
 
-        private void Update()
+        private void OnBeatEvent(BeatEvent beatEvent)
         {
             if (context.rootNote != rootNote || context.scaleType != scaleType)
             {
