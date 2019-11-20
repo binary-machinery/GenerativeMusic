@@ -29,7 +29,8 @@ namespace ConfigurablePipeline
                 Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
                 Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
 
-                float volume = beatEvent.isStrong ? 1f : 0.5f;
+                bool strong = quarterBeatNumber % context.beatManager.measure == 0;
+                float volume = strong ? 1f : 0.5f;
                 queue.AddSound(new PlayableSound(root, volume, quarterBeatNumber, 4));
                 queue.AddSound(new PlayableSound(third, volume, quarterBeatNumber, 4));
                 queue.AddSound(new PlayableSound(fifth, volume, quarterBeatNumber, 4));
