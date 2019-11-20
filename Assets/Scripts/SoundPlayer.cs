@@ -24,8 +24,7 @@ public class SoundPlayer : MonoBehaviour
 
     private void Start()
     {
-        _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent);
-        _beatManager.AddBeatEventListener(OnBeatEvent, int.MaxValue);
+        _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent, int.MaxValue);
     }
 
     private void OnQuarterBeatEvent(QuarterBeatEvent quarterBeatEvent)
@@ -46,12 +45,9 @@ public class SoundPlayer : MonoBehaviour
             _soundControllers.Remove(soundId);
             soundController.Stop();
         }
-    }
 
-    private void OnBeatEvent(BeatEvent beatEvent)
-    {
         PlayableSound playableSound;
-        while ((playableSound = _queue.GetNextForQuarterBeat(beatEvent.quarterBeatNumber)) != null)
+        while ((playableSound = _queue.GetNextForQuarterBeat(quarterBeatEvent.quarterBeatNumber)) != null)
         {
             AbstractSoundController soundController = _instrument.PlayNote(
                 playableSound.pitch, playableSound.volume, playableSound.durationQuarterBeats);

@@ -13,6 +13,8 @@ namespace ConfigurablePipeline
             Backward,
             Random,
         }
+        
+        private const int SOUND_DURATION_QUARTER_BEATS = 4;
 
         [SerializeField]
         private Mode _mode;
@@ -49,8 +51,8 @@ namespace ConfigurablePipeline
                 {
                     float volume = strong ? 1f : 0.5f;
                     strong = false;
-                    queue.AddSound(new PlayableSound(pitches[index], volume, quarterBeatNumber, 4));
-                    quarterBeatNumber += 4;
+                    queue.AddSound(new PlayableSound(pitches[index], volume, quarterBeatNumber, SOUND_DURATION_QUARTER_BEATS));
+                    quarterBeatNumber += SOUND_DURATION_QUARTER_BEATS;
                 }
             }
 
