@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class BeatManager : MonoBehaviour
 {
+    public int bpm => _bpm;
+    public int measure => _measure;
+    
     [SerializeField]
     [Range(1, 300)]
     private int _bpm = 60;

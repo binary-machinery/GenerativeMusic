@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fadd5f2f426af45ae89a776dde5c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rootNote: 6
+  _rootNote: 2
   _scaleType: 5
 --- !u!114 &402393205
 MonoBehaviour:
@@ -635,8 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4788aa4f844ef099fe884bb92b9137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rootNote: 6
-  _scaleType: 5
+  _rootNote: 0
+  _scaleType: 0
 --- !u!1 &406452141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _oscillatorPrefab: {fileID: 4194312882240480887, guid: efbd904ff639ffb43981ab9480b41add,
     type: 3}
-  _waveForm: 2
+  _waveForm: 1
   _masterGain: 0.138
 --- !u!4 &1492882634
 Transform:
@@ -2801,3 +2801,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eebff263d98490a86e9ab46c1390617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mode: 2

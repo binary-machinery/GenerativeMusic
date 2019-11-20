@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MusicAlgebra;
 using UnityEngine;
 
@@ -6,6 +7,16 @@ namespace ConfigurablePipeline
 {
     public class ArpeggioPhysicalChordsGenerator : AbstractPhysicalChordConverter
     {
+        private enum Mode
+        {
+            Forward,
+            Backward,
+            Random,
+        }
+
+        [SerializeField]
+        private Mode _mode;
+
         private void Start()
         {
             context.beatManager.AddBeatEventListener(OnBeatEvent, transform.GetSiblingIndex());
@@ -25,19 +36,54 @@ namespace ConfigurablePipeline
                     quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
                 }
 
-                Pitch root = new Pitch(academicChord.notes[0], 4);
-                Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
-                Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
+                List<Pitch> pitches = new List<Pitch>
+                {
+                    new Pitch(academicChord.notes[0], 4),
+                    new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5),
+                    new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5),
+                };
 
-                queue.AddSound(new PlayableSound(root, 1f, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(third, 1f, quarterBeatNumber + 4, 4));
-                queue.AddSound(new PlayableSound(fifth, 1f, quarterBeatNumber + 8, 4));
+                List<int> indices = GetIndices(pitches.Count);
+                bool strong = true;
+                foreach (int index in indices)
+                {
+                    float volume = strong ? 1f : 0.5f;
+                    strong = false;
+                    queue.AddSound(new PlayableSound(pitches[index], volume, quarterBeatNumber, 4));
+                    quarterBeatNumber += 4;
+                }
             }
 
             if (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count == 0)
             {
                 Debug.LogWarning("Playable sounds queue is not full, but academic chords queue is empty");
             }
+        }
+
+        private List<int> GetIndices(int pitchesCount)
+        {
+            List<int> indices = Enumerable.Range(1, pitchesCount)
+                .Select(x => x - 1)
+                .ToList();
+            switch (_mode)
+            {
+                case Mode.Forward:
+                    break;
+
+                case Mode.Backward:
+                    indices.Reverse();
+                    break;
+
+                case Mode.Random:
+                    indices.Shuffle();
+                    break;
+            }
+
+            int repeatCount = Mathf.CeilToInt(context.beatManager.measure / (float)pitchesCount);
+            return Enumerable.Repeat(indices, repeatCount)
+                .SelectMany(x => x)
+                .Take(context.beatManager.measure)
+                .ToList();
         }
     }
 }

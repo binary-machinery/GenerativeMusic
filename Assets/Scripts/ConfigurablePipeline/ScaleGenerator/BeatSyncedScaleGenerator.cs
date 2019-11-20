@@ -5,6 +5,7 @@ namespace ConfigurablePipeline
         private void Start()
         {
             context.beatManager.AddBeatEventListener(OnBeatEvent, transform.GetSiblingIndex());
+            UpdateScale(rootNote, scaleType);
         }
 
         private void OnBeatEvent(BeatEvent beatEvent)
