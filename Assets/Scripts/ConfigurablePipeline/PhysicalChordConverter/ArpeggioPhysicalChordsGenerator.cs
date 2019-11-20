@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using MusicAlgebra;
 using UnityEngine;
 
 namespace ConfigurablePipeline
 {
-    public class DirectPhysicalChordConverter : AbstractPhysicalChordConverter
+    public class ArpeggioPhysicalChordsGenerator : AbstractPhysicalChordConverter
     {
         private void Start()
         {
@@ -30,8 +30,8 @@ namespace ConfigurablePipeline
                 Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
 
                 queue.AddSound(new PlayableSound(root, 1f, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(third, 1f, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(fifth, 1f, quarterBeatNumber, 4));
+                queue.AddSound(new PlayableSound(third, 1f, quarterBeatNumber + 4, 4));
+                queue.AddSound(new PlayableSound(fifth, 1f, quarterBeatNumber + 8, 4));
             }
 
             if (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count == 0)
