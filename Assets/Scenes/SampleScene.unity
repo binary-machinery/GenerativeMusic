@@ -1177,6 +1177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 613546948}
   - component: {fileID: 613546949}
+  - component: {fileID: 613546950}
   m_Layer: 0
   m_Name: ChordsGenerator
   m_TagString: Untagged
@@ -1205,9 +1206,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613546947}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f48d582319f02724e8f473e4314e4c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &613546950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613546947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621cbb83a0184273ae1136c33f1a9de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &639581753
@@ -1879,7 +1892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850677bff3a207144892df8fe53eaed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bpm: 90
+  _bpm: 120
   _measure: 4
 --- !u!4 &1302654505
 Transform:
@@ -2013,7 +2026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _oscillatorPrefab: {fileID: 4194312882240480887, guid: efbd904ff639ffb43981ab9480b41add,
     type: 3}
-  _waveForm: 0
+  _waveForm: 2
   _masterGain: 0.138
 --- !u!4 &1492882634
 Transform:

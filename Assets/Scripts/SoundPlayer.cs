@@ -25,7 +25,7 @@ public class SoundPlayer : MonoBehaviour
     private void Start()
     {
         _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent);
-        _beatManager.AddBeatEventListener(OnBeatEvent);
+        _beatManager.AddBeatEventListener(OnBeatEvent, int.MaxValue);
     }
 
     private void OnQuarterBeatEvent(QuarterBeatEvent quarterBeatEvent)
