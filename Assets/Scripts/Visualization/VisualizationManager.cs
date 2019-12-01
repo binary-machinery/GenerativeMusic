@@ -61,7 +61,7 @@ namespace Visualization
 
         void Update()
         {
-            int stepsCount = 48;
+            int stepsCount = 96;
             float width = 20f;
             float height = 20f;
 
@@ -77,13 +77,13 @@ namespace Visualization
                 {
                     color = i % 4 == 0 ? Color.red : Color.white;
                 }
-                Debug.DrawLine(new Vector3(x, -height / 2f, Z_DEPTH), new Vector3(x, height / 2f, Z_DEPTH), color);
+                Debug.DrawLine(new Vector3(x, -width / 2f, Z_DEPTH), new Vector3(x, width / 2f, Z_DEPTH), color);
             }
 
             for (int i = -stepsCount / 2; i <= stepsCount / 2; ++i)
             {
                 float y = i * _pitchStep;
-                Debug.DrawLine(new Vector3(-width / 2f, y, Z_DEPTH), new Vector3(width / 2f, y, Z_DEPTH));
+                Debug.DrawLine(new Vector3(-height / 2f, y, Z_DEPTH), new Vector3(height / 2f, y, Z_DEPTH));
             }
         }
 
