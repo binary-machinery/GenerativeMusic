@@ -213,7 +213,7 @@ MonoBehaviour:
   _soundPrefab: {fileID: 8319348475117576626, guid: 69d0ea607666c934a8540d489db8fe2b,
     type: 3}
   _quarterBeatStep: 0.4
-  _pitchStep: 0.4
+  _pitchStep: 0.1
   _pitchGridIndexOffset: -5
   _defaultSoundColor: {r: 1, g: 0, b: 0, a: 1}
   _playingSoundColor: {r: 0, g: 0, b: 1, a: 1}
@@ -636,7 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rootNote: 0
-  _scaleType: 0
+  _scaleType: 2
 --- !u!1 &406452141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2756,7 @@ GameObject:
   - component: {fileID: 2028781602}
   - component: {fileID: 2028781603}
   - component: {fileID: 2028781604}
+  - component: {fileID: 2028781605}
   m_Layer: 0
   m_Name: PhysicalChordConverter
   m_TagString: Untagged
@@ -2796,9 +2797,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028781601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eebff263d98490a86e9ab46c1390617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _mode: 2
+--- !u!114 &2028781605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028781601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9825b5f97ca4e1fa01c8133957b0663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
