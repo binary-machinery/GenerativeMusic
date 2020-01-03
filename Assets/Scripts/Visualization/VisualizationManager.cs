@@ -61,7 +61,7 @@ namespace Visualization
 
         void Update()
         {
-            int stepsCount = 96;
+            int stepsCount = 200;
             float width = 20f;
             float height = 20f;
 
