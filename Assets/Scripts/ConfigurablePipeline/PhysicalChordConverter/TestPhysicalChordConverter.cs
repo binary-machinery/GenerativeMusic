@@ -64,7 +64,7 @@ namespace ConfigurablePipeline
                         new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 6 : 7),
                     };
 
-                    const int arpeggioNoteDurationTimeQuanta = 4;
+                    const int arpeggioNoteDurationTimeQuanta = 8;
                     List<int> indices = GetIndices(arpeggioPitches.Count, context.beatManager.timeQuantaPerBeat / arpeggioNoteDurationTimeQuanta);
                     int arpeggioTimeQuantumNumber = timeQuantumNumber;
                     foreach (int index in indices)
