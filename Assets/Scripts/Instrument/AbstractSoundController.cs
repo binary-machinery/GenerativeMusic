@@ -1,22 +1,22 @@
 ﻿public abstract class AbstractSoundController
 {
-    private readonly int _durationQuarterBeats;
-    private int _quarterBeatsCounter;
+    private readonly int _durationTimeQuanta;
+    private int _timeQuantumCounter;
 
-    protected AbstractSoundController(int durationQuarterBeats)
+    protected AbstractSoundController(int durationTimeQuanta)
     {
-        _durationQuarterBeats = durationQuarterBeats;
+        _durationTimeQuanta = durationTimeQuanta;
     }
 
     public abstract void Stop();
 
-    public void IncrementQuarterBeatCounter()
+    public void IncrementTimeQuantumCounter()
     {
-        ++_quarterBeatsCounter;
+        ++_timeQuantumCounter;
     }
 
     public bool IsTimeToStop()
     {
-        return _quarterBeatsCounter >= _durationQuarterBeats;
+        return _timeQuantumCounter >= _durationTimeQuanta;
     }
 }

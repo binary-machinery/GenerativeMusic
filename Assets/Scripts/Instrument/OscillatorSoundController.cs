@@ -4,7 +4,7 @@ public class OscillatorSoundController : AbstractSoundController
 {
     private readonly Oscillator _oscillator;
 
-    public OscillatorSoundController(Oscillator oscillator, int durationQuarterBeats) : base(durationQuarterBeats)
+    public OscillatorSoundController(Oscillator oscillator, int durationTimeQuanta) : base(durationTimeQuanta)
     {
         _oscillator = oscillator;
     }

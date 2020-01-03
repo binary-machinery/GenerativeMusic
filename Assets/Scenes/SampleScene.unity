@@ -213,7 +213,7 @@ MonoBehaviour:
   _queue: {fileID: 71877716}
   _soundPrefab: {fileID: 8319348475117576626, guid: 69d0ea607666c934a8540d489db8fe2b,
     type: 3}
-  _quarterBeatStep: 0.4
+  _timeQuantumStep: 0.4
   _pitchStep: 0.1
   _pitchGridIndexOffset: -5
   _defaultSoundColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1895,6 +1895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bpm: 30
+  _timeQuantaPerBeat: 4
   _measure: 4
 --- !u!4 &1302654505
 Transform:

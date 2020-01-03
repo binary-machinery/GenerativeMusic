@@ -20,9 +20,9 @@ public class PlayableSoundQueue : MonoBehaviour
         onSoundAdded?.Invoke(sound);
     }
 
-    public PlayableSound GetNextForQuarterBeat(int quarterBeatNumber)
+    public PlayableSound GetNextForTimeQuantum(int timeQuantumNumber)
     {
-        if (_queue.Count == 0 || _queue.Peek().startQuarterBeatNumber > quarterBeatNumber)
+        if (_queue.Count == 0 || _queue.Peek().startTimeQuantumNumber > timeQuantumNumber)
         {
             return null;
         }

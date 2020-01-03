@@ -19,21 +19,21 @@ namespace ConfigurablePipeline
             {
                 AcademicChord academicChord = academicChordsQueue.Dequeue();
                 PlayableSound lastSound = queue.GetLastSound();
-                int quarterBeatNumber = beatEvent.quarterBeatNumber;
+                int timeQuantumNumber = beatEvent.timeQuantumNumber;
                 if (lastSound != null)
                 {
-                    quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
+                    timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
 
                 Pitch root = new Pitch(academicChord.notes[0], 4);
                 Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
                 Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
 
-                bool strong = quarterBeatNumber % context.beatManager.measure == 0;
+                bool strong = timeQuantumNumber % context.beatManager.measure == 0;
                 float volume = strong ? 1f : 0.5f;
-                queue.AddSound(new PlayableSound(root, volume, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(third, volume, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(fifth, volume, quarterBeatNumber, 4));
+                queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, 4));
+                queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, 4));
+                queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, 4));
             }
 
             if (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count == 0)

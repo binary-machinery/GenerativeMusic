@@ -24,15 +24,15 @@ public class SoundPlayer : MonoBehaviour
 
     private void Start()
     {
-        _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent, int.MaxValue);
+        _beatManager.AddTimeQuantumEventListener(OnTimeQuantumEvent, int.MaxValue);
     }
 
-    private void OnQuarterBeatEvent(QuarterBeatEvent quarterBeatEvent)
+    private void OnTimeQuantumEvent(TimeQuantumEvent timeQuantumEvent)
     {
         _soundsToStop.Clear();
         foreach (var kvPair in _soundControllers)
         {
-            kvPair.Value.IncrementQuarterBeatCounter();
+            kvPair.Value.IncrementTimeQuantumCounter();
             if (kvPair.Value.IsTimeToStop())
             {
                 _soundsToStop.Add(kvPair.Key);
@@ -47,10 +47,10 @@ public class SoundPlayer : MonoBehaviour
         }
 
         PlayableSound playableSound;
-        while ((playableSound = _queue.GetNextForQuarterBeat(quarterBeatEvent.quarterBeatNumber)) != null)
+        while ((playableSound = _queue.GetNextForTimeQuantum(timeQuantumEvent.timeQuantumNumber)) != null)
         {
             AbstractSoundController soundController = _instrument.PlayNote(
-                playableSound.pitch, playableSound.volume, playableSound.durationQuarterBeats);
+                playableSound.pitch, playableSound.volume, playableSound.durationTimeQuanta);
             if (soundController != null)
             {
                 _soundControllers[_soundCounter++] = soundController;

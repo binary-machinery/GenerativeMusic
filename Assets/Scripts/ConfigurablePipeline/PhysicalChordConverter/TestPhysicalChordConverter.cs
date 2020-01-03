@@ -29,13 +29,13 @@ namespace ConfigurablePipeline
             {
                 AcademicChord academicChord = academicChordsQueue.Dequeue();
                 PlayableSound lastSound = queue.GetLastSound();
-                int quarterBeatNumber = beatEvent.quarterBeatNumber;
+                int timeQuantumNumber = beatEvent.timeQuantumNumber;
                 if (lastSound != null)
                 {
-                    quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
+                    timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
 
-                bool strong = quarterBeatNumber % context.beatManager.measure == 0;
+                bool strong = timeQuantumNumber % context.beatManager.measure == 0;
                 float volume = strong ? 1f : 0.5f;
 
                 if (_useMelody)
@@ -43,15 +43,15 @@ namespace ConfigurablePipeline
                     Pitch root = new Pitch(academicChord.notes[0], 4);
                     Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
                     Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
-                    queue.AddSound(new PlayableSound(root, volume, quarterBeatNumber, 4));
-                    queue.AddSound(new PlayableSound(third, volume, quarterBeatNumber, 4));
-                    queue.AddSound(new PlayableSound(fifth, volume, quarterBeatNumber, 4));
+                    queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, 4));
+                    queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, 4));
+                    queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, 4));
                 }
 
                 if (_useBass && strong)
                 {
                     Pitch bass = new Pitch(academicChord.notes[0], 2);
-                    queue.AddSound(new PlayableSound(bass, volume, quarterBeatNumber, 4));
+                    queue.AddSound(new PlayableSound(bass, volume, timeQuantumNumber, 4));
                 }
 
                 if (_useCounterMelody)
@@ -63,11 +63,11 @@ namespace ConfigurablePipeline
                         new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 6 : 7),
                     };
                     List<int> indices = GetIndices(3);
-                    int arpeggioQuarterBeatNumber = quarterBeatNumber;
+                    int arpeggioTimeQuantumNumber = timeQuantumNumber;
                     foreach (int index in indices)
                     {
-                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioQuarterBeatNumber, 1));
-                        arpeggioQuarterBeatNumber += 1;
+                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 1));
+                        arpeggioTimeQuantumNumber += 1;
                     }
                 }
             }

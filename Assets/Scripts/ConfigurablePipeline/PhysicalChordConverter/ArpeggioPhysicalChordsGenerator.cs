@@ -14,7 +14,7 @@ namespace ConfigurablePipeline
             Random,
         }
         
-        private const int SOUND_DURATION_QUARTER_BEATS = 4;
+        private const int SOUND_DURATION_TIME_QUANTA = 4;
 
         [SerializeField]
         private Mode _mode;
@@ -32,10 +32,10 @@ namespace ConfigurablePipeline
             {
                 AcademicChord academicChord = academicChordsQueue.Dequeue();
                 PlayableSound lastSound = queue.GetLastSound();
-                int quarterBeatNumber = beatEvent.quarterBeatNumber;
+                int timeQuantumNumber = beatEvent.timeQuantumNumber;
                 if (lastSound != null)
                 {
-                    quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
+                    timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
 
                 List<Pitch> pitches = new List<Pitch>
@@ -51,8 +51,8 @@ namespace ConfigurablePipeline
                 {
                     float volume = strong ? 1f : 0.5f;
                     strong = false;
-                    queue.AddSound(new PlayableSound(pitches[index], volume, quarterBeatNumber, SOUND_DURATION_QUARTER_BEATS));
-                    quarterBeatNumber += SOUND_DURATION_QUARTER_BEATS;
+                    queue.AddSound(new PlayableSound(pitches[index], volume, timeQuantumNumber, SOUND_DURATION_TIME_QUANTA));
+                    timeQuantumNumber += SOUND_DURATION_TIME_QUANTA;
                 }
             }
 

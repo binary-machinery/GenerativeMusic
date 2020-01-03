@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using MusicAlgebra;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Visualization
 {
     public class VisualizationManager : MonoBehaviour
     {
         private const float Z_DEPTH = 5;
-        private const int PLAYED_SOUNDS_TIME_TO_LIVE = 24; // in quarter beats
+        private const int PLAYED_SOUNDS_TIME_TO_LIVE = 8; // in beats
         private const int NOTE_GRID_OFFSET = -4;
         private const int OCTAVE_GRID_OFFSET = -4;
 
@@ -24,9 +25,9 @@ namespace Visualization
 
         [SerializeField]
         private Sound _soundPrefab;
-
+        
         [SerializeField]
-        private float _quarterBeatStep;
+        private float _timeQuantumStep;
 
         [SerializeField]
         private float _pitchStep;
@@ -55,7 +56,7 @@ namespace Visualization
 
         private void Start()
         {
-            _beatManager.AddQuarterBeatEventListener(OnQuarterBeatEvent);
+            _beatManager.AddTimeQuantumEventListener(OnTimeQuantumEvent);
             _queue.onSoundAdded += OnSoundAdded;
         }
 
@@ -67,7 +68,7 @@ namespace Visualization
 
             for (int i = -stepsCount / 2; i <= stepsCount / 2; ++i)
             {
-                float x = i * _quarterBeatStep;
+                float x = i * _timeQuantumStep;
                 Color color;
                 if (i == 0)
                 {
@@ -87,7 +88,7 @@ namespace Visualization
             }
         }
 
-        private void OnQuarterBeatEvent(QuarterBeatEvent quarterBeatEvent)
+        private void OnTimeQuantumEvent(TimeQuantumEvent timeQuantumEvent)
         {
             foreach (var kv in _sounds)
             {
@@ -97,8 +98,8 @@ namespace Visualization
                     sound.gameObject.SetActive(true);
                 }
 
-                int beatGridIndex = sound.playableSound.startQuarterBeatNumber - quarterBeatEvent.quarterBeatNumber;
-                float x = beatGridIndex * _quarterBeatStep;
+                int beatGridIndex = sound.playableSound.startTimeQuantumNumber - timeQuantumEvent.timeQuantumNumber;
+                float x = beatGridIndex * _timeQuantumStep;
 
                 Pitch pitch = sound.playableSound.pitch;
                 int pitchGridIndex = (int)pitch.note + NOTE_GRID_OFFSET + (pitch.octave + OCTAVE_GRID_OFFSET) * Defines.SEMITONES_COUNT;
@@ -107,12 +108,12 @@ namespace Visualization
 
                 sound.transform.localPosition = new Vector3(x, y, Z_DEPTH);
 
-                if (beatGridIndex + sound.playableSound.durationQuarterBeats < -PLAYED_SOUNDS_TIME_TO_LIVE)
+                if (beatGridIndex + sound.playableSound.durationTimeQuanta < -PLAYED_SOUNDS_TIME_TO_LIVE * _beatManager.timeQuantaPerBeat)
                 {
                     _soundsToRemove.Add(sound.playableSound.id);
                 }
 
-                if (beatGridIndex <= 0 && Mathf.Abs(beatGridIndex) < sound.playableSound.durationQuarterBeats)
+                if (beatGridIndex <= 0 && Mathf.Abs(beatGridIndex) < sound.playableSound.durationTimeQuanta)
                 {
                     sound.SetColor(_playingSoundColor);
                 }
@@ -138,7 +139,7 @@ namespace Visualization
             Sound sound = Instantiate(_soundPrefab, _soundsParent);
             sound.gameObject.SetActive(false);
             sound.playableSound = playableSound;
-            sound.SetSize(_quarterBeatStep * playableSound.durationQuarterBeats, _pitchStep);
+            sound.SetSize(_timeQuantumStep * playableSound.durationTimeQuanta, _pitchStep);
             _sounds[playableSound.id] = sound;
 
             onSoundCreated?.Invoke(sound);

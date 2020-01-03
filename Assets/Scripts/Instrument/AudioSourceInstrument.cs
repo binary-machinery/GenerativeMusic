@@ -18,7 +18,7 @@ public class AudioSourceInstrument : AbstractInstrument
         }
     }
 
-    public override AbstractSoundController PlayNote(Pitch pitch, float volume, int durationQuarterBeats)
+    public override AbstractSoundController PlayNote(Pitch pitch, float volume, int durationTimeQuanta)
     {
         AudioSource source = GetAudioSourceForNote(pitch);
         if (source != null)
