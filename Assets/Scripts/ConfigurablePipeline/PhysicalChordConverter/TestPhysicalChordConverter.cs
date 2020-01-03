@@ -53,7 +53,7 @@ namespace ConfigurablePipeline
                     queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
                 }
 
-                if (_useBass && isStrong)
+                if (_useBass)
                 {
                     Pitch bass = new Pitch(academicChord.notes[0], 2);
                     queue.AddSound(new PlayableSound(bass, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
@@ -71,8 +71,8 @@ namespace ConfigurablePipeline
                     int arpeggioTimeQuantumNumber = timeQuantumNumber;
                     foreach (int index in indices)
                     {
-                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 1));
-                        arpeggioTimeQuantumNumber += 1;
+                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 2));
+                        arpeggioTimeQuantumNumber += 2;
                     }
                 }
             }
