@@ -50,12 +50,12 @@ public class BeatManager : MonoBehaviour
         if (Time.time >= _nextTimeQuantumTime)
         {
             FireTimeQuantumEvent();
-            _nextTimeQuantumTime += GetTimeQuantumLength();
             if (_timeQuantumCounter % _timeQuantaPerBeat == 0)
             {
-                FireBeatEvent(_nextTimeQuantumTime);
+                FireBeatEvent();
                 ++_beatCounter;
             }
+            _nextTimeQuantumTime += GetTimeQuantumLength();
             ++_timeQuantumCounter;
         }
     }
@@ -86,9 +86,9 @@ public class BeatManager : MonoBehaviour
         _timeQuantumEventListeners.ForEach(listener => listener.action.Invoke(timeQuantumEvent));
     }
 
-    private void FireBeatEvent(float time)
+    private void FireBeatEvent()
     {
-        BeatEvent beatEvent = new BeatEvent(time, _timeQuantumCounter, _beatCounter, _beatCounter % _measure == 0);
+        BeatEvent beatEvent = new BeatEvent(_nextTimeQuantumTime, _timeQuantumCounter, _beatCounter, _beatCounter % _measure == 0);
         _beatEventListeners.ForEach(listener => listener.action.Invoke(beatEvent));
     }
 

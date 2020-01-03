@@ -16,7 +16,12 @@ public class PlayableSoundQueue : MonoBehaviour
     public void AddSound(PlayableSound sound)
     {
         _queue.Enqueue(sound);
-        _lastSound = sound;
+        
+        if (_lastSound == null || _lastSound.startTimeQuantumNumber + _lastSound.durationTimeQuanta < sound.startTimeQuantumNumber + sound.durationTimeQuanta)
+        {
+            _lastSound = sound;
+        }
+        
         onSoundAdded?.Invoke(sound);
     }
 

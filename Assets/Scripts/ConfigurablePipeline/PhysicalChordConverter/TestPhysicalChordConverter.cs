@@ -23,6 +23,8 @@ namespace ConfigurablePipeline
 
         private void OnBeatEvent(BeatEvent beatEvent)
         {
+            Debug.Log("OnBeatEvent: beatEvent.timeQuantumNumber=" + beatEvent.timeQuantumNumber + ", beatEvent.beatNumber=" + beatEvent.beatNumber);
+            
             Queue<AcademicChord> academicChordsQueue = context.academicChordsQueue;
             PlayableSoundQueue queue = context.playableSoundQueue;
             while (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count > 0)
@@ -34,23 +36,27 @@ namespace ConfigurablePipeline
                 {
                     timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
+
+                int beatCounter = timeQuantumNumber / context.beatManager.timeQuantaPerBeat;
+                bool isStrong = beatCounter % context.beatManager.measure == 0;
+                float volume = isStrong ? 1f : 0.75f;
                 
-                float volume = beatEvent.isStrong ? 1f : 0.5f;
+                Debug.Log("timeQuantumNumber=" + timeQuantumNumber + ", beatCounter=" + beatCounter + ", isStrong=" + isStrong);
 
                 if (_useMelody)
                 {
                     Pitch root = new Pitch(academicChord.notes[0], 4);
                     Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
                     Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
-                    queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, 4));
-                    queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, 4));
-                    queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, 4));
+                    queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                    queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                    queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
                 }
 
-                if (_useBass && beatEvent.isStrong)
+                if (_useBass && isStrong)
                 {
                     Pitch bass = new Pitch(academicChord.notes[0], 2);
-                    queue.AddSound(new PlayableSound(bass, volume, timeQuantumNumber, 4));
+                    queue.AddSound(new PlayableSound(bass, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
                 }
 
                 if (_useCounterMelody)
