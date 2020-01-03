@@ -24,7 +24,7 @@ public class BeatManager : MonoBehaviour
     private int _measure = 4;
 
     private float _startTime;
-    private float _nextTimeQuantumTime;
+    private float _lastTimeQuantumTime;
     private int _beatCounter;
     private int _timeQuantumCounter;
     private List<PrioritizedEventListener<BeatEvent>> _beatEventListeners;
@@ -33,7 +33,7 @@ public class BeatManager : MonoBehaviour
     private void Awake()
     {
         _startTime = Time.time;
-        _nextTimeQuantumTime = _startTime + GetTimeQuantumLength();
+        _lastTimeQuantumTime = _startTime;
         _beatEventListeners = new List<PrioritizedEventListener<BeatEvent>>();
         _timeQuantumEventListeners = new List<PrioritizedEventListener<TimeQuantumEvent>>();
     }
@@ -42,20 +42,20 @@ public class BeatManager : MonoBehaviour
     {
         float timeQuantumLength = GetTimeQuantumLength();
         int timeQuantaPassed = Mathf.FloorToInt((Time.time - _startTime) / timeQuantumLength);
-        _nextTimeQuantumTime = (timeQuantaPassed + 1) * timeQuantumLength;
+        _lastTimeQuantumTime = timeQuantaPassed * timeQuantumLength;
     }
 
     private void Update()
     {
-        if (Time.time >= _nextTimeQuantumTime)
+        if (Time.time >= _lastTimeQuantumTime + GetTimeQuantumLength())
         {
+            _lastTimeQuantumTime += GetTimeQuantumLength();
             FireTimeQuantumEvent();
             if (_timeQuantumCounter % _timeQuantaPerBeat == 0)
             {
                 FireBeatEvent();
                 ++_beatCounter;
             }
-            _nextTimeQuantumTime += GetTimeQuantumLength();
             ++_timeQuantumCounter;
         }
     }
@@ -88,7 +88,7 @@ public class BeatManager : MonoBehaviour
 
     private void FireBeatEvent()
     {
-        BeatEvent beatEvent = new BeatEvent(_nextTimeQuantumTime, _timeQuantumCounter, _beatCounter, _beatCounter % _measure == 0);
+        BeatEvent beatEvent = new BeatEvent(_lastTimeQuantumTime, _timeQuantumCounter, _beatCounter, _beatCounter % _measure == 0);
         _beatEventListeners.ForEach(listener => listener.action.Invoke(beatEvent));
     }
 
