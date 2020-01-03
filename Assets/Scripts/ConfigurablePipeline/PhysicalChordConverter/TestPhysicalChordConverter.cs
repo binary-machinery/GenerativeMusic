@@ -71,8 +71,8 @@ namespace ConfigurablePipeline
                     int arpeggioTimeQuantumNumber = timeQuantumNumber;
                     foreach (int index in indices)
                     {
-                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 2));
-                        arpeggioTimeQuantumNumber += 2;
+                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 8));
+                        arpeggioTimeQuantumNumber += 8;
                     }
                 }
             }
