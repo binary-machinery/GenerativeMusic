@@ -34,9 +34,8 @@ namespace ConfigurablePipeline
                 {
                     timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
-
-                bool strong = timeQuantumNumber % context.beatManager.measure == 0;
-                float volume = strong ? 1f : 0.5f;
+                
+                float volume = beatEvent.isStrong ? 1f : 0.5f;
 
                 if (_useMelody)
                 {
@@ -48,7 +47,7 @@ namespace ConfigurablePipeline
                     queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, 4));
                 }
 
-                if (_useBass && strong)
+                if (_useBass && beatEvent.isStrong)
                 {
                     Pitch bass = new Pitch(academicChord.notes[0], 2);
                     queue.AddSound(new PlayableSound(bass, volume, timeQuantumNumber, 4));
