@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using MusicAlgebra;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Visualization
 {
@@ -76,15 +75,17 @@ namespace Visualization
                 }
                 else
                 {
-                    color = i % 4 == 0 ? Color.red : Color.white;
+                    color = i % _beatManager.timeQuantaPerBeat == 0 ? Color.red : Color.white;
+                    color.a = 0.2f;
                 }
                 Debug.DrawLine(new Vector3(x, -width / 2f, Z_DEPTH), new Vector3(x, width / 2f, Z_DEPTH), color);
             }
-
+            
+            Color pitchLinesColor = new Color(1f, 1f, 1f, 0.5f);
             for (int i = -stepsCount / 2; i <= stepsCount / 2; ++i)
             {
                 float y = i * _pitchStep;
-                Debug.DrawLine(new Vector3(-height / 2f, y, Z_DEPTH), new Vector3(height / 2f, y, Z_DEPTH));
+                Debug.DrawLine(new Vector3(-height / 2f, y, Z_DEPTH), new Vector3(height / 2f, y, Z_DEPTH), pitchLinesColor);
             }
         }
 
