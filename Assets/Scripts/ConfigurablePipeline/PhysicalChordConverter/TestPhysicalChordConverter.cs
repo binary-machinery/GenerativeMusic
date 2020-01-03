@@ -7,7 +7,14 @@ namespace ConfigurablePipeline
 {
     public class TestPhysicalChordConverter : AbstractPhysicalChordConverter
     {
-        private const int SOUND_DURATION_QUARTER_BEATS = 4;
+        [SerializeField]
+        private bool _useCounterMelody = true;
+
+        [SerializeField]
+        private bool _useMelody = true;
+
+        [SerializeField]
+        private bool _useBass = true;
 
         private void Start()
         {
@@ -28,34 +35,40 @@ namespace ConfigurablePipeline
                     quarterBeatNumber = lastSound.startQuarterBeatNumber + lastSound.durationQuarterBeats;
                 }
 
-                Pitch root = new Pitch(academicChord.notes[0], 4);
-                Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
-                Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
-
                 bool strong = quarterBeatNumber % context.beatManager.measure == 0;
                 float volume = strong ? 1f : 0.5f;
-                queue.AddSound(new PlayableSound(root, volume, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(third, volume, quarterBeatNumber, 4));
-                queue.AddSound(new PlayableSound(fifth, volume, quarterBeatNumber, 4));
 
-                if (strong)
+                if (_useMelody)
+                {
+                    Pitch root = new Pitch(academicChord.notes[0], 4);
+                    Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
+                    Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
+                    queue.AddSound(new PlayableSound(root, volume, quarterBeatNumber, 4));
+                    queue.AddSound(new PlayableSound(third, volume, quarterBeatNumber, 4));
+                    queue.AddSound(new PlayableSound(fifth, volume, quarterBeatNumber, 4));
+                }
+
+                if (_useBass && strong)
                 {
                     Pitch bass = new Pitch(academicChord.notes[0], 2);
                     queue.AddSound(new PlayableSound(bass, volume, quarterBeatNumber, 4));
                 }
 
-                List<Pitch> arpeggioPitches = new List<Pitch>
+                if (_useCounterMelody)
                 {
-                    new Pitch(academicChord.notes[0], 5),
-                    new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 6),
-                    new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 6),
-                };
-                List<int> indices = GetIndices(3);
-                int arpeggioQuarterBeatNumber = quarterBeatNumber;
-                foreach (int index in indices)
-                {
-                    queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioQuarterBeatNumber, 1));
-                    arpeggioQuarterBeatNumber += 1;
+                    List<Pitch> arpeggioPitches = new List<Pitch>
+                    {
+                        new Pitch(academicChord.notes[0], 6),
+                        new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 6 : 7),
+                        new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 6 : 7),
+                    };
+                    List<int> indices = GetIndices(3);
+                    int arpeggioQuarterBeatNumber = quarterBeatNumber;
+                    foreach (int index in indices)
+                    {
+                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioQuarterBeatNumber, 1));
+                        arpeggioQuarterBeatNumber += 1;
+                    }
                 }
             }
 
@@ -73,7 +86,7 @@ namespace ConfigurablePipeline
 
             indices.Shuffle();
 
-            int repeatCount = Mathf.CeilToInt(context.beatManager.measure / (float)pitchesCount);
+            int repeatCount = Mathf.CeilToInt(context.beatManager.measure / (float) pitchesCount);
             return Enumerable.Repeat(indices, repeatCount)
                 .SelectMany(x => x)
                 .Take(context.beatManager.measure)
