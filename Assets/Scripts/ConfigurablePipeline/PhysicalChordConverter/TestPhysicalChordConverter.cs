@@ -23,8 +23,6 @@ namespace ConfigurablePipeline
 
         private void OnBeatEvent(BeatEvent beatEvent)
         {
-            Debug.Log("OnBeatEvent: beatEvent.timeQuantumNumber=" + beatEvent.timeQuantumNumber + ", beatEvent.beatNumber=" + beatEvent.beatNumber);
-            
             Queue<AcademicChord> academicChordsQueue = context.academicChordsQueue;
             PlayableSoundQueue queue = context.playableSoundQueue;
             while (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count > 0)
@@ -40,8 +38,6 @@ namespace ConfigurablePipeline
                 int beatCounter = timeQuantumNumber / context.beatManager.timeQuantaPerBeat;
                 bool isStrong = beatCounter % context.beatManager.measure == 0;
                 float volume = isStrong ? 1f : 0.75f;
-                
-                Debug.Log("timeQuantumNumber=" + timeQuantumNumber + ", beatCounter=" + beatCounter + ", isStrong=" + isStrong);
 
                 if (_useMelody)
                 {
