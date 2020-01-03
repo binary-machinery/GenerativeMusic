@@ -63,12 +63,14 @@ namespace ConfigurablePipeline
                         new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 6 : 7),
                         new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 6 : 7),
                     };
-                    List<int> indices = GetIndices(3);
+
+                    const int arpeggioNoteDurationTimeQuanta = 4;
+                    List<int> indices = GetIndices(arpeggioPitches.Count, context.beatManager.timeQuantaPerBeat / arpeggioNoteDurationTimeQuanta);
                     int arpeggioTimeQuantumNumber = timeQuantumNumber;
                     foreach (int index in indices)
                     {
-                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, 8));
-                        arpeggioTimeQuantumNumber += 8;
+                        queue.AddSound(new PlayableSound(arpeggioPitches[index], volume, arpeggioTimeQuantumNumber, arpeggioNoteDurationTimeQuanta));
+                        arpeggioTimeQuantumNumber += arpeggioNoteDurationTimeQuanta;
                     }
                 }
             }
@@ -79,7 +81,7 @@ namespace ConfigurablePipeline
             }
         }
 
-        private List<int> GetIndices(int pitchesCount)
+        private List<int> GetIndices(int pitchesCount, int targetNotesCount)
         {
             List<int> indices = Enumerable.Range(1, pitchesCount)
                 .Select(x => x - 1)
@@ -87,10 +89,10 @@ namespace ConfigurablePipeline
 
             indices.Shuffle();
 
-            int repeatCount = Mathf.CeilToInt(context.beatManager.measure / (float) pitchesCount);
+            int repeatCount = Mathf.CeilToInt(targetNotesCount / (float) pitchesCount);
             return Enumerable.Repeat(indices, repeatCount)
                 .SelectMany(x => x)
-                .Take(context.beatManager.measure)
+                .Take(targetNotesCount)
                 .ToList();
         }
     }

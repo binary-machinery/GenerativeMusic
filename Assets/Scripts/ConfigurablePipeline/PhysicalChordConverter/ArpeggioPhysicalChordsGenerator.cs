@@ -45,7 +45,7 @@ namespace ConfigurablePipeline
                     new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5),
                 };
 
-                List<int> indices = GetIndices(pitches.Count);
+                List<int> indices = GetIndices(pitches.Count, context.beatManager.timeQuantaPerBeat / SOUND_DURATION_TIME_QUANTA);
                 bool strong = true;
                 foreach (int index in indices)
                 {
@@ -62,7 +62,7 @@ namespace ConfigurablePipeline
             }
         }
 
-        private List<int> GetIndices(int pitchesCount)
+        private List<int> GetIndices(int pitchesCount, int targetNotesCount)
         {
             List<int> indices = Enumerable.Range(1, pitchesCount)
                 .Select(x => x - 1)
@@ -81,10 +81,10 @@ namespace ConfigurablePipeline
                     break;
             }
 
-            int repeatCount = Mathf.CeilToInt(context.beatManager.measure / (float)pitchesCount);
+            int repeatCount = Mathf.CeilToInt(targetNotesCount / (float)pitchesCount);
             return Enumerable.Repeat(indices, repeatCount)
                 .SelectMany(x => x)
-                .Take(context.beatManager.measure)
+                .Take(targetNotesCount)
                 .ToList();
         }
     }
