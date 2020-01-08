@@ -89,7 +89,7 @@ namespace ConfigurablePipeline
 
             indices.Shuffle();
 
-            int repeatCount = Mathf.CeilToInt(targetNotesCount / (float) pitchesCount);
+            int repeatCount = Mathf.CeilToInt(targetNotesCount / (float)pitchesCount);
             return Enumerable.Repeat(indices, repeatCount)
                 .SelectMany(x => x)
                 .Take(targetNotesCount)
