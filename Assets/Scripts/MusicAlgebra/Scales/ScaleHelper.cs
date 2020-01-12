@@ -42,5 +42,16 @@ namespace MusicAlgebra
             }
             return chords;
         }
+
+        public static AcademicChord[] GenerateSingleNoteAcademicChords(AcademicScale academicScale)
+        {
+            AcademicChord[] chords = new AcademicChord[academicScale.notes.Length];
+            for (int i = 0; i < academicScale.notes.Length; ++i)
+            {
+                Note[] notes = { academicScale.notes[i] };
+                chords[i] = new AcademicChord(notes[0], notes);
+            }
+            return chords;
+        }
     }
 }

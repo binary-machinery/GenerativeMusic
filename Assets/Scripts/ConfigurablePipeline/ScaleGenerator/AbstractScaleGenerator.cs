@@ -13,11 +13,16 @@ namespace ConfigurablePipeline
 
         [SerializeField]
         private ScaleType _scaleType;
-        
+
+        [SerializeField]
+        private bool _useSingleNoteChords;
+
         protected void UpdateScale(Note rootNote, ScaleType scaleType)
         {
             context.academicScale = ScaleHelper.Create(rootNote, scaleType);
-            context.academicChords = ScaleHelper.GenerateAcademicChords(context.academicScale);
+            context.academicChords = _useSingleNoteChords
+                ? ScaleHelper.GenerateSingleNoteAcademicChords(context.academicScale)
+                : ScaleHelper.GenerateAcademicChords(context.academicScale);
             context.rootNote = rootNote;
             context.scaleType = scaleType;
         }

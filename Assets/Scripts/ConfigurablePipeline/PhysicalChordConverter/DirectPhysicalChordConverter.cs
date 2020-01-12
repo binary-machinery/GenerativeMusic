@@ -25,14 +25,13 @@ namespace ConfigurablePipeline
                     timeQuantumNumber = lastSound.startTimeQuantumNumber + lastSound.durationTimeQuanta;
                 }
 
-                Pitch root = new Pitch(academicChord.notes[0], 4);
-                Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
-                Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
-                
                 float volume = beatEvent.isStrong ? 1f : 0.75f;
-                queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
-                queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
-                queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                for (int i = 0; i < academicChord.notes.Length; ++i)
+                {
+                    Note chordNote = academicChord.notes[i];
+                    Pitch pitch = new Pitch(chordNote, (i == 0 || chordNote > academicChord.notes[0]) ? 4 : 5);
+                    queue.AddSound(new PlayableSound(pitch, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                }
             }
 
             if (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count == 0)
