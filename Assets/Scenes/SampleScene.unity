@@ -668,7 +668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rootNote: 0
-  _scaleType: 2
+  _scaleType: 0
+  _useSingleNoteChords: 0
 --- !u!114 &402393205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,6 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rootNote: 0
   _scaleType: 2
+  _useSingleNoteChords: 0
 --- !u!1 &406452141
 GameObject:
   m_ObjectHideFlags: 0
