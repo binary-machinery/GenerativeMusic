@@ -29,10 +29,10 @@ namespace ConfigurablePipeline
                 Pitch third = new Pitch(academicChord.notes[1], academicChord.notes[1] > academicChord.notes[0] ? 4 : 5);
                 Pitch fifth = new Pitch(academicChord.notes[2], academicChord.notes[2] > academicChord.notes[0] ? 4 : 5);
                 
-                float volume = beatEvent.isStrong ? 1f : 0.5f;
-                queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, 4));
-                queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, 4));
-                queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, 4));
+                float volume = beatEvent.isStrong ? 1f : 0.75f;
+                queue.AddSound(new PlayableSound(root, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                queue.AddSound(new PlayableSound(third, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
+                queue.AddSound(new PlayableSound(fifth, volume, timeQuantumNumber, context.beatManager.timeQuantaPerBeat));
             }
 
             if (queue.count < MAX_QUEUE_SIZE && academicChordsQueue.Count == 0)
