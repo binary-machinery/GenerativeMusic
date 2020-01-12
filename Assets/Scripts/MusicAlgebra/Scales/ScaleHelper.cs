@@ -13,6 +13,8 @@ namespace MusicAlgebra
             { ScaleType.Mixolydian, new[] { 2, 2, 1, 2, 2, 1 } },
             { ScaleType.Minor, new[] { 2, 1, 2, 2, 1, 2 } },
             { ScaleType.Locrian, new[] { 1, 2, 2, 1, 2, 2 } },
+            { ScaleType.MajorPentatonic, new[] { 2, 2, 3, 2 } },
+            { ScaleType.MinorPentatonic, new[] { 3, 2, 2, 3 } },
         };
 
         public static AcademicScale Create(Note rootNote, ScaleType scaleType)

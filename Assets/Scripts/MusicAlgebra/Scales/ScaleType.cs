@@ -8,6 +8,8 @@
         Lydian,
         Mixolydian,
         Minor, // Aeolian
-        Locrian
+        Locrian,
+        MajorPentatonic,
+        MinorPentatonic
     }
 }
